@@ -1,0 +1,18 @@
+﻿  Camera.cpp
+G:\GCP\Raytracer\source\Camera.h(9,44): error C2653: "glm": nie jest nazwą klasa lub nazwą przestrzeni nazw
+  Ray.cpp
+G:\GCP\Raytracer\source\Camera.h(9,44): error C2061: błąd składniowy: identyfikator „ivec2”
+G:\GCP\Raytracer\source\Ray.cpp(6,1): error C2600: „Ray::Ray”: Nie można zdefiniować generowanej przez kompilator specjalnej funkcji składowej (musi być najpierw zadeklarowana w klasie)
+  Raytracer.cpp
+G:\GCP\Raytracer\source\Ray.cpp(11,1): error C2600: „Ray::~Ray”: Nie można zdefiniować generowanej przez kompilator specjalnej funkcji składowej (musi być najpierw zadeklarowana w klasie)
+G:\GCP\Raytracer\source\Raytracer.h(9,12): error C2653: "glm": nie jest nazwą klasa lub nazwą przestrzeni nazw
+G:\GCP\Raytracer\source\Raytracer.h(9,20): error C3646: "RayTrace": nieznany specyfikator przesłonięcia
+G:\GCP\Raytracer\source\Raytracer.h(9,20): error C2059: błąd składniowy: „(”
+  Sphere.cpp
+G:\GCP\Raytracer\source\Raytracer.h(9,47): error C2238: nieoczekiwany(e) token(y) poprzedzający(e) ";"
+G:\GCP\Raytracer\source\Sphere.h(9,12): error C2653: "glm": nie jest nazwą klasa lub nazwą przestrzeni nazw
+G:\GCP\Raytracer\source\Sphere.h(9,22): error C3646: "ShadePixel": nieznany specyfikator przesłonięcia
+G:\GCP\Raytracer\source\Sphere.h(9,22): error C2059: błąd składniowy: „(”
+G:\GCP\Raytracer\source\Sphere.h(9,60): error C2653: "glm": nie jest nazwą klasa lub nazwą przestrzeni nazw
+  Generowanie kodu...
+G:\GCP\Raytracer\source\Sphere.h(10,2): error C2334: nieoczekiwany(e) token(y) poprzedzające "{"; pomijanie treści widocznych funkcji
