@@ -1,4 +1,4 @@
-#pragma once
+#include <glm/ext.hpp>
 #include <memory>
 
 class Ray;

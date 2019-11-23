@@ -9,7 +9,7 @@ The output was:
 Microsoft (R) Build Engine 16.3.2+e481bbf88 dla platformy .NET Framework
 Copyright (C) Microsoft Corporation. Wszelkie prawa zastrzeżone.
 
-Kompilacja rozpoczęła się 23.11.2019 22:51:40.
+Kompilacja rozpoczęła się 23.11.2019 23:21:00.
 Projekt "G:\GCP\Raytracer\build\CMakeFiles\3.15.1\CompilerIdC\CompilerIdC.vcxproj" w węźle 1 (domyślne elementy docelowe).
 PrepareForBuild:
   Tworzenie katalogu "Debug\".
@@ -35,7 +35,7 @@ Kompilacja powiodła się.
     Ostrzeżenia: 0
     Liczba błędów: 0
 
-Czas, który upłynął: 00:00:02.51
+Czas, który upłynął: 00:00:02.01
 
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
@@ -54,7 +54,7 @@ The output was:
 Microsoft (R) Build Engine 16.3.2+e481bbf88 dla platformy .NET Framework
 Copyright (C) Microsoft Corporation. Wszelkie prawa zastrzeżone.
 
-Kompilacja rozpoczęła się 23.11.2019 22:51:43.
+Kompilacja rozpoczęła się 23.11.2019 23:21:03.
 Projekt "G:\GCP\Raytracer\build\CMakeFiles\3.15.1\CompilerIdCXX\CompilerIdCXX.vcxproj" w węźle 1 (domyślne elementy docelowe).
 PrepareForBuild:
   Tworzenie katalogu "Debug\".
@@ -80,7 +80,7 @@ Kompilacja powiodła się.
     Ostrzeżenia: 0
     Liczba błędów: 0
 
-Czas, który upłynął: 00:00:01.78
+Czas, który upłynął: 00:00:01.75
 
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -92,56 +92,56 @@ The CXX compiler identification is MSVC, found in "G:/GCP/Raytracer/build/CMakeF
 Determining if the C compiler works passed with the following output:
 Change Dir: G:/GCP/Raytracer/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_300fc.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine 16.3.2+e481bbf88 dla platformy .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_9ae98.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine 16.3.2+e481bbf88 dla platformy .NET Framework
 Copyright (C) Microsoft Corporation. Wszelkie prawa zastrzeżone.
 
   Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.23.28107 dla x64
   Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
   testCCompiler.c
-  cl /c /IG:\GEP\gep_sdk\include\msvc /IG:\GEP\gep_sdk\include\common /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_300fc.dir\Debug\\" /Fd"cmTC_300fc.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue G:\GCP\Raytracer\build\CMakeFiles\CMakeTmp\testCCompiler.c
-  cmTC_300fc.vcxproj -> G:\GCP\Raytracer\build\CMakeFiles\CMakeTmp\Debug\cmTC_300fc.exe
+  cl /c /IG:\GEP\gep_sdk\include\msvc /IG:\GEP\gep_sdk\include\common /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_9ae98.dir\Debug\\" /Fd"cmTC_9ae98.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue G:\GCP\Raytracer\build\CMakeFiles\CMakeTmp\testCCompiler.c
+  cmTC_9ae98.vcxproj -> G:\GCP\Raytracer\build\CMakeFiles\CMakeTmp\Debug\cmTC_9ae98.exe
 
 
 
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: G:/GCP/Raytracer/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_f5e9b.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine 16.3.2+e481bbf88 dla platformy .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_5f0ef.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine 16.3.2+e481bbf88 dla platformy .NET Framework
 Copyright (C) Microsoft Corporation. Wszelkie prawa zastrzeżone.
 
   Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.23.28107 dla x64
   Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
   CMakeCCompilerABI.c
-  cl /c /IG:\GEP\gep_sdk\include\msvc /IG:\GEP\gep_sdk\include\common /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_f5e9b.dir\Debug\\" /Fd"cmTC_f5e9b.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue "G:\GEP\gep_sdk\opt\cmake-3.15.1\share\cmake-3.15\Modules\CMakeCCompilerABI.c"
-  cmTC_f5e9b.vcxproj -> G:\GCP\Raytracer\build\CMakeFiles\CMakeTmp\Debug\cmTC_f5e9b.exe
+  cl /c /IG:\GEP\gep_sdk\include\msvc /IG:\GEP\gep_sdk\include\common /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_5f0ef.dir\Debug\\" /Fd"cmTC_5f0ef.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue "G:\GEP\gep_sdk\opt\cmake-3.15.1\share\cmake-3.15\Modules\CMakeCCompilerABI.c"
+  cmTC_5f0ef.vcxproj -> G:\GCP\Raytracer\build\CMakeFiles\CMakeTmp\Debug\cmTC_5f0ef.exe
 
 
 
 Determining if the CXX compiler works passed with the following output:
 Change Dir: G:/GCP/Raytracer/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_43611.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine 16.3.2+e481bbf88 dla platformy .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_fffc7.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine 16.3.2+e481bbf88 dla platformy .NET Framework
 Copyright (C) Microsoft Corporation. Wszelkie prawa zastrzeżone.
 
   Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.23.28107 dla x64
   Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
   testCXXCompiler.cxx
-  cl /c /IG:\GEP\gep_sdk\include\msvc /IG:\GEP\gep_sdk\include\common /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_43611.dir\Debug\\" /Fd"cmTC_43611.dir\Debug\vc142.pdb" /Gd /TP /errorReport:queue G:\GCP\Raytracer\build\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
-  cmTC_43611.vcxproj -> G:\GCP\Raytracer\build\CMakeFiles\CMakeTmp\Debug\cmTC_43611.exe
+  cl /c /IG:\GEP\gep_sdk\include\msvc /IG:\GEP\gep_sdk\include\common /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_fffc7.dir\Debug\\" /Fd"cmTC_fffc7.dir\Debug\vc142.pdb" /Gd /TP /errorReport:queue G:\GCP\Raytracer\build\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
+  cmTC_fffc7.vcxproj -> G:\GCP\Raytracer\build\CMakeFiles\CMakeTmp\Debug\cmTC_fffc7.exe
 
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: G:/GCP/Raytracer/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_330b3.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine 16.3.2+e481bbf88 dla platformy .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_2f368.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine 16.3.2+e481bbf88 dla platformy .NET Framework
 Copyright (C) Microsoft Corporation. Wszelkie prawa zastrzeżone.
 
   Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.23.28107 dla x64
   Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
   CMakeCXXCompilerABI.cpp
-  cl /c /IG:\GEP\gep_sdk\include\msvc /IG:\GEP\gep_sdk\include\common /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_330b3.dir\Debug\\" /Fd"cmTC_330b3.dir\Debug\vc142.pdb" /Gd /TP /errorReport:queue "G:\GEP\gep_sdk\opt\cmake-3.15.1\share\cmake-3.15\Modules\CMakeCXXCompilerABI.cpp"
-  cmTC_330b3.vcxproj -> G:\GCP\Raytracer\build\CMakeFiles\CMakeTmp\Debug\cmTC_330b3.exe
+  cl /c /IG:\GEP\gep_sdk\include\msvc /IG:\GEP\gep_sdk\include\common /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_2f368.dir\Debug\\" /Fd"cmTC_2f368.dir\Debug\vc142.pdb" /Gd /TP /errorReport:queue "G:\GEP\gep_sdk\opt\cmake-3.15.1\share\cmake-3.15\Modules\CMakeCXXCompilerABI.cpp"
+  cmTC_2f368.vcxproj -> G:\GCP\Raytracer\build\CMakeFiles\CMakeTmp\Debug\cmTC_2f368.exe
 
 
 
