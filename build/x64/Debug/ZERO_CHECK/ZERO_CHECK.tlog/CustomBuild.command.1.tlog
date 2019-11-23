@@ -1,0 +1,10 @@
+^G:\GCP\RAYTRACER\BUILD\CMAKEFILES\DCCD9DA9BDA9456141E2A6776128006E\GENERATE.STAMP.RULE
+setlocal
+G:\GEP\gep_sdk\opt\cmake-3.15.1\bin\cmake.exe -SG:/GCP/Raytracer -BG:/GCP/Raytracer/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file G:/GCP/Raytracer/build/Raytracer.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
