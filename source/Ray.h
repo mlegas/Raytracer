@@ -1,6 +1,12 @@
 #include <glm/ext.hpp>
 #include <memory>
 
+struct IntersectionData
+{
+	bool m_intersection;
+	std::vector<glm::vec3> m_points;
+}
+
 class Ray
 {
 private:
@@ -9,10 +15,10 @@ private:
 	glm::vec3 m_normalizedDirection;
 	float m_lengthOnLine;
 public:
-	Ray();
+	Ray(glm::vec3 _origin, glm::vec3 _direction);
 	glm::vec3 GetOrigin();
 	glm::vec3 GetDirection();
 	glm::vec3 ClosestPoint(std::shared_ptr<Ray> _ray, glm::vec3 _queryPoint);
-
+	IntersectionData SphereIntersection(std::shared_ptr<Ray> _ray, std::shared_ptr<Sphere> _sphere)
 };
 
