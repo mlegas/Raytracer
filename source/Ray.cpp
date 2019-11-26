@@ -3,17 +3,17 @@
 #include <limits>
 #include <memory>
 
-glm::vec3 Ray::ClosestPoint(std::shared_ptr<Ray> _ray, glm::vec3 _queryPoint)
+glm::vec3 Ray::ClosestPoint(glm::vec3 _queryPoint)
 {
-	m_normalizedDirection = glm::normalize(_ray->GetDirection());
-	m_lengthOnLine = glm::dot((_queryPoint - _ray->GetOrigin()), m_normalizedDirection);
-	glm::vec3 closestPoint = _ray->GetOrigin() + (m_lengthOnLine * m_normalizedDirection);
+	m_normalizedDirection = glm::normalize(m_direction);
+	m_lengthOnLine = glm::dot((_queryPoint - m_origin), m_normalizedDirection);
+	glm::vec3 closestPoint = m_origin + (m_lengthOnLine * m_normalizedDirection);
 	return closestPoint;
 }
 
-IntersectionData Ray::SphereIntersection(std::shared_ptr<Ray> _ray, std::shared_ptr<Sphere> _sphere)
+IntersectionData Ray::SphereIntersection(std::shared_ptr<Sphere> _sphere)
 {
-	IntersectionData data;
+	std::shared_ptr<IntersectionData> data;
 	
 	glm::vec3 distanceFromOrigin = glm::vec3(m_origin - _sphere->getCentre());
 	float distanceSquared = glm::dot(distanceFromOrigin, distanceFromOrigin);
@@ -27,7 +27,7 @@ IntersectionData Ray::SphereIntersection(std::shared_ptr<Ray> _ray, std::shared_
 		// check if sphere is behind ray
 		if (glm::dot(m_direction, point) <= 0.0f)
 		{
-			data.m_intersection = false;
+			data->m_intersection = false;
 		}
 		
 		else 
@@ -41,14 +41,14 @@ IntersectionData Ray::SphereIntersection(std::shared_ptr<Ray> _ray, std::shared_
 			//check if point is inside sphere
 			if (distanceSquared > radiusSquared)
 			{
-				data.m_intersection = false;
+				data->m_intersection = false;
 			}
 			
 			// check if intersection point is on sphere's edge
 			else if (fabs(distanceSquared - radiusSquared) < std::numeric_limits<float>::epsilon())
 			{
-				data.m_intersection = true;
-				data.m_points.push_back(point);
+				data->m_intersection = true;
+				data->m_points.push_back(point);
 			}
 			
 			else
@@ -56,9 +56,9 @@ IntersectionData Ray::SphereIntersection(std::shared_ptr<Ray> _ray, std::shared_
 				float d = glm::length(_sphere->getCentre() - m_origin - (m_lengthOnLine * m_normalizedDirection));
 				float x = sqrt(radiusSquared - (d * d));
 				
-				data.m_intersection = true;
-				data.m_point.push_back(m_origin + (m_lengthOnLine - x) * m_normalizedDirection);
-				data.m_point.push_back(m_origin + (m_lengthOnLine + x) * m_normalizedDirection);
+				data->m_intersection = true;
+				data->m_points.push_back(m_origin + (m_lengthOnLine - x) * m_normalizedDirection);
+				data->m_points.push_back(m_origin + (m_lengthOnLine + x) * m_normalizedDirection);
 			}
 		}
 	}
@@ -69,15 +69,6 @@ IntersectionData Ray::SphereIntersection(std::shared_ptr<Ray> _ray, std::shared_
 	}
 	
 	return data;
-}
-
-glm::vec3 Ray::GetOrigin()
-{
-	return m_origin;
-}
-glm::vec3 Ray::GetDirection()
-{
-	return m_direction;
 }
 
 Ray::Ray(glm::vec3 _origin, glm::vec3 _direction)

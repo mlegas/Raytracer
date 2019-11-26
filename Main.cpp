@@ -11,8 +11,8 @@ int main()
 	SDL_Window *window;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
 		// Something went very wrong in initialisation, all we can do is exit
+	{
 		std::cout << "MCG Framework: Whoops! Something went very wrong, cannot initialise SDL :(" << std::endl;
 		return false;
 	}

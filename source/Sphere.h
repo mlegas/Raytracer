@@ -3,7 +3,7 @@
 
 class Ray;
 
-class Sphere
+class Sphere : public Object
 {
 private:
 	glm::vec3 m_position;

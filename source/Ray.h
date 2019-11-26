@@ -18,7 +18,7 @@ public:
 	Ray(glm::vec3 _origin, glm::vec3 _direction);
 	glm::vec3 GetOrigin();
 	glm::vec3 GetDirection();
-	glm::vec3 ClosestPoint(std::shared_ptr<Ray> _ray, glm::vec3 _queryPoint);
-	IntersectionData SphereIntersection(std::shared_ptr<Ray> _ray, std::shared_ptr<Sphere> _sphere)
+	glm::vec3 ClosestPoint(glm::vec3 _queryPoint);
+	std::shared_ptr<IntersectionData> SphereIntersection(std::shared_ptr<Sphere> _sphere)
 };
 
