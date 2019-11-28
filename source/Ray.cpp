@@ -1,4 +1,5 @@
 #include "Ray.h"
+#include "Sphere.h"
 #include <cmath>
 #include <limits>
 #include <memory>
@@ -11,18 +12,18 @@ glm::vec3 Ray::ClosestPoint(glm::vec3 _queryPoint)
 	return closestPoint;
 }
 
-IntersectionData Ray::SphereIntersection(std::shared_ptr<Sphere> _sphere)
+std::shared_ptr<IntersectionData> Ray::SphereIntersection(std::shared_ptr<Sphere> _sphere)
 {
 	std::shared_ptr<IntersectionData> data;
 	
-	glm::vec3 distanceFromOrigin = glm::vec3(m_origin - _sphere->getCentre());
+	glm::vec3 distanceFromOrigin = glm::vec3(m_origin - _sphere->getPosition());
 	float distanceSquared = glm::dot(distanceFromOrigin, distanceFromOrigin);
 	float radiusSquared = _sphere->getRadius() * _sphere->getRadius();
 	
 	//check if ray origin is inside sphere
 	if (distanceSquared > radiusSquared)
 	{
-		glm::vec3 point = ClosestPoint(_ray, _sphere);
+		glm::vec3 point = ClosestPoint(_sphere->getPosition());
 		
 		// check if sphere is behind ray
 		if (glm::dot(m_direction, point) <= 0.0f)
@@ -33,7 +34,7 @@ IntersectionData Ray::SphereIntersection(std::shared_ptr<Sphere> _sphere)
 		else 
 		{
 			//get the distance from closest point on line to sphere's centre
-			glm::vec3 distanceFromPoint = glm::vec3(point - _sphere->getCentre());
+			glm::vec3 distanceFromPoint = glm::vec3(point - _sphere->getPosition());
 			
 			//now proper intersection tests begin
 			distanceSquared = glm::dot(distanceFromPoint, distanceFromPoint);
@@ -53,7 +54,7 @@ IntersectionData Ray::SphereIntersection(std::shared_ptr<Sphere> _sphere)
 			
 			else
 			{
-				float d = glm::length(_sphere->getCentre() - m_origin - (m_lengthOnLine * m_normalizedDirection));
+				float d = glm::length(_sphere->getPosition() - m_origin - (m_lengthOnLine * m_normalizedDirection));
 				float x = sqrt(radiusSquared - (d * d));
 				
 				data->m_intersection = true;
@@ -65,10 +66,19 @@ IntersectionData Ray::SphereIntersection(std::shared_ptr<Sphere> _sphere)
 	
 	else
 	{
-		data.m_intersection = false;
+		data->m_intersection = false;
 	}
 	
 	return data;
+}
+
+glm::vec3 Ray::NormalOfSphere(std::shared_ptr<Sphere> _sphere, glm::vec3 _intersectionPoint)
+{
+	//https://www.gamedev.net/forums/topic/168338-sphere-surface-normal/
+	glm::vec3 normal = glm::vec3((_sphere->getPosition().x - _intersectionPoint.x)/_sphere->getRadius(), 
+							(_sphere->getPosition().y - _intersectionPoint.y)/_sphere->getRadius(), 
+							(_sphere->getPosition().z - _intersectionPoint.z)/_sphere->getRadius());
+	return normal;
 }
 
 Ray::Ray(glm::vec3 _origin, glm::vec3 _direction)

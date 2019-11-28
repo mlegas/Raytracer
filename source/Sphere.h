@@ -1,3 +1,4 @@
+#include "Object.h"
 #include <glm/ext.hpp>
 #include <memory>
 
@@ -6,14 +7,10 @@ class Ray;
 class Sphere : public Object
 {
 private:
-	glm::vec3 m_position;
 	float m_radius;
 public:
-	glm::vec3 ShadePixel(std::shared_ptr<Ray> _ray, glm::vec3 _intersectionPoint)
-	{
-		return glm::vec3(1, 1, 1);
-	}
-
-	Sphere();
+	glm::vec3 shadePixel(std::shared_ptr<Ray> _ray, glm::vec3 _intersectionPoint);
+	float getRadius();
+	Sphere(glm::vec3 _position, float _radius);
 	~Sphere();
 };

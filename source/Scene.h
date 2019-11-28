@@ -1,3 +1,8 @@
+#include <vector>
+#include <memory>
+
+class Object;
+
 class Scene
 {
 private:

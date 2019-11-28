@@ -6,12 +6,13 @@ class Ray;
 class Camera
 {
 private:
-	glm::mat4 view;
-	glm::mat4 projection;
+	glm::ivec2 m_windowSize;
+	glm::mat4 m_view;
+	glm::mat4 m_projection;
 	
 public:
 	std::shared_ptr<Ray> CreateRay(glm::ivec2 _pixelCoords);
-	Camera();
+	Camera(glm::ivec2 _windowSize);
 	~Camera();
 };
 
