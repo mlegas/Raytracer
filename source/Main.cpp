@@ -55,7 +55,7 @@ int main()
 
 			// Set the colour for drawing
 			SDL_SetRenderDrawColor(renderer, pixelColour.r, pixelColour.g, pixelColour.b, 255);
-			// Draw our pixels
+			// Draw pixels
 			SDL_RenderDrawPoint(renderer, currentPixel.x, currentPixel.y);
 		}
 	}
