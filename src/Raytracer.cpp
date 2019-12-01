@@ -16,7 +16,7 @@ glm::vec3 Raytracer::RayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> 
 	std::vector<glm::vec3>::iterator shortestDistPoint;
 	std::vector<std::shared_ptr<Object>>::iterator shortestDistObj;
 
-	for (objIt = _scene->getObjects().begin(); objIt != _scene->getObjects().end(); objIt++)
+	for (objIt = _scene->getObjects()->begin(); objIt != _scene->getObjects()->end(); objIt++)
 	{
 		std::shared_ptr<Sphere> sphere = std::dynamic_pointer_cast<Sphere>(*objIt);
 		data = _ray->SphereIntersection(sphere);
@@ -28,7 +28,7 @@ glm::vec3 Raytracer::RayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> 
 			for (vecIt = data->m_points.begin(); vecIt != data->m_points.end(); vecIt++)
 			{
 				float tempDistanceSquared = glm::dot(*vecIt, *vecIt);
-				if (tempDistanceSquared < shortestDistance)
+                if (tempDistanceSquared < shortestDistance)
 				{
 					anythingHit = true;
 					shortestDistance = tempDistanceSquared;

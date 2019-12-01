@@ -6,9 +6,10 @@ std::shared_ptr<Ray> Camera::CreateRay(glm::ivec2 _pixelCoords)
 	// change range using https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
 	// NewValue = (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
 
-	float ndcX = ((((float)_pixelCoords.x - 0) * (1 - (-1))) / ((float)m_windowSize.x - 0)) + (-1);
-	float ndcY = ((((float)_pixelCoords.y - 0) * (1 - (-1))) / ((float)m_windowSize.y - 0)) + (-1);
+	float ndcX = ((_pixelCoords.x * 2) / m_windowSize.x) - 1;
+	float ndcY = -(((_pixelCoords.y * 2) / m_windowSize.y) - 1);
 
+    // WRONG CONVERSION TO NDC - FIX PLS
 	glm::vec4 origin = glm::vec4(ndcX, ndcY, -1, 1);
 	glm::vec4 direction = glm::vec4(ndcX, ndcY, 1, 1);
 
@@ -29,7 +30,7 @@ Camera::Camera(glm::ivec2 _windowSize)
 {
 	m_windowSize = _windowSize;
 
-	m_projection = glm::perspective(glm::radians(70.0f), (float)_windowSize.x / (float)_windowSize.y, 0.1f, 100.f);
+    m_projection = glm::perspective(glm::radians(80.0f), static_cast<float>(_windowSize.x) / static_cast<float>(_windowSize.y), 0.1f, 100.f);
 
 	m_view = glm::lookAt(
 		glm::vec3(0, 0, 0), ///< This is the origin of the camera.

@@ -3,17 +3,17 @@ cmake_minimum_required(VERSION 2.6)
 project(Raytracer)
 
 include_directories(
-	source
+        src
 )
 
 file(GLOB FILES
-	source/*.cpp
-	source/*.h)
+	src/*.cpp
+	src/*.h)
 
 add_library(RaytracingFiles SHARED ${FILES})
 
 add_executable(Main
-	Main.cpp
+        src/Main.cpp
 )
 
-target_link_libraries(Main RaytracingFiles glm SDL2)
+target_link_libraries(Main RaytracingFiles SDL2)

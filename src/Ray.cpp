@@ -14,7 +14,7 @@ glm::vec3 Ray::ClosestPoint(glm::vec3 _queryPoint)
 
 std::shared_ptr<IntersectionData> Ray::SphereIntersection(std::shared_ptr<Sphere> _sphere)
 {
-	std::shared_ptr<IntersectionData> data;
+	std::shared_ptr<IntersectionData> data = std::make_shared<IntersectionData>();
 	
 	glm::vec3 distanceFromOrigin = glm::vec3(m_origin - _sphere->getPosition());
 	float distanceSquared = glm::dot(distanceFromOrigin, distanceFromOrigin);
