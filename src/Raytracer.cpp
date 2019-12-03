@@ -3,62 +3,38 @@
 #include "Scene.h"
 #include "Sphere.h"
 
-glm::vec3 Raytracer::RayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> _scene)
+glm::vec3 Raytracer::RayTrace(const Ray &_ray, std::shared_ptr<Scene> _scene)
 {
-	std::vector<std::shared_ptr<Object>>::iterator objIt;
-
-	std::shared_ptr<IntersectionData> data;
-
-	float shortestDistance = FLT_MAX;
+    std::vector<std::shared_ptr<Object>>::iterator objIterator;
+    std::vector<std::shared_ptr<Object>>::iterator storeObj;
 
 	bool anythingHit = false;
+    float nearestDistance = FLT_MAX;
 
-	std::vector<glm::vec3>::iterator shortestDistPoint;
-	std::vector<std::shared_ptr<Object>>::iterator shortestDistObj;
-
-	for (objIt = _scene->getObjects()->begin(); objIt != _scene->getObjects()->end(); objIt++)
+    for (objIterator = _scene->getObjects()->begin(); objIterator != _scene->getObjects()->end(); objIterator++)
 	{
-		std::shared_ptr<Sphere> sphere = std::dynamic_pointer_cast<Sphere>(*objIt);
-		data = _ray->SphereIntersection(sphere);
+        if ((*objIterator)->intersect(_ray))
+        {
+            if (!anythingHit)
+            {
+                anythingHit = true;
+            }
 
-		if (data->m_intersection)
-		{
-			std::vector<glm::vec3>::iterator vecIt;
-
-			for (vecIt = data->m_points.begin(); vecIt != data->m_points.end(); vecIt++)
-			{
-				float tempDistanceSquared = glm::dot(*vecIt, *vecIt);
-                if (tempDistanceSquared < shortestDistance)
-				{
-					anythingHit = true;
-					shortestDistance = tempDistanceSquared;
-					shortestDistPoint = vecIt;
-					shortestDistObj = objIt;
-				}
-			}
-		}
+            if (nearestDistance > (*objIterator)->getIntersectionDistance())
+            {
+                nearestDistance = (*objIterator)->getIntersectionDistance();
+                storeObj = objIterator;
+            }
+        }
 	}
 
-	// get shortest distance from origin to intersection point
-	// call this object's shade function (return glm::vec3)
-
-	if (anythingHit)
+    if (anythingHit)
 	{
-		return (*shortestDistObj)->shadePixel(_ray, *shortestDistPoint);
+        return (*storeObj)->shadePixel(_ray);
 	}
 
-	else
-	{
-		return glm::vec3(0,0,0);
-	}
-
-}
-
-Raytracer::Raytracer()
-{
-}
-
-
-Raytracer::~Raytracer()
-{
+    else
+    {
+        return glm::vec3(255.0f,255.0f,255.0f);
+    }
 }

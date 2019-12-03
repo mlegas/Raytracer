@@ -7,8 +7,6 @@ class Scene;
 class Raytracer
 {
 public:
-	glm::vec3 RayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> _scene);
-	Raytracer();
-	~Raytracer();
+    glm::vec3 RayTrace(const Ray &_ray, std::shared_ptr<Scene> _scene);
 };
 

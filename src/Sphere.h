@@ -2,15 +2,15 @@
 #include <glm/ext.hpp>
 #include <memory>
 
-class Ray;
-
 class Sphere : public Object
 {
 private:
 	float m_radius;
+    float m_radiusSquared;
 public:
-	glm::vec3 shadePixel(std::shared_ptr<Ray> _ray, glm::vec3 _intersectionPoint);
+    glm::vec3 shadePixel(const Ray &_ray);
+    bool intersect(const Ray &_ray);
 	float getRadius();
-	Sphere(glm::vec3 _position, float _radius);
-	~Sphere();
+    float getRadiusSquared();
+    Sphere(glm::vec3 _position, float _radius);
 };
