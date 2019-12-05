@@ -1,28 +1,46 @@
 #include "Ray.h"
 #include "Sphere.h"
 
-bool Sphere::intersect(const Ray &_ray)
+bool Sphere::intersect(std::shared_ptr<Ray> _ray)
 {
-    glm::vec3 originToCenter = m_position - _ray.m_origin;
-    float distanceToCenter = glm::dot(originToCenter, _ray.m_direction);
+    glm::vec3 centerToOrigin = _ray->getOrigin() - m_position;
+    float a = glm::dot(_ray->getDirection(), _ray->getDirection());
+    float b = 2.0f * glm::dot(_ray->getDirection(), centerToOrigin);
+    float c = glm::dot(centerToOrigin, centerToOrigin) - m_radiusSquared;
 
-    if (distanceToCenter < 0.0f)
-    {
-        return false; // point behind ray
-    }
+    float discriminant = (b * b) - (4 * a * c);
 
-    float distanceSquared = glm::dot(originToCenter, originToCenter) - (distanceToCenter * distanceToCenter);
+    // solutions for t
+    float t0;
+    float t1;
 
-    if (distanceSquared > m_radiusSquared)
+    if (discriminant < 0.0f)
     {
         return false; // no intersection
     }
 
-    float middleToIntersection = sqrt(m_radiusSquared - distanceSquared);
+    else if (discriminant < std::numeric_limits<float>::epsilon())
+    {
+        t0 = t1 = - 0.5f * b / a;
+    }
 
-    // solutions for t
-    float t0 = distanceToCenter - middleToIntersection;
-    float t1 = distanceToCenter + middleToIntersection;
+    else
+    {
+        float q;
+
+        if (b > 0.0f)
+        {
+            q = -0.5f * (b + sqrt(discriminant));
+        }
+
+        else
+        {
+            q = -0.5f * (b - sqrt(discriminant));
+        }
+
+        t0 = q / a;
+        t1 = c / q;
+     }
 
     float t;
 
@@ -55,13 +73,13 @@ bool Sphere::intersect(const Ray &_ray)
     }
 
     m_data.m_distance = t;
-    m_data.m_point = _ray.m_origin + _ray.m_direction * t;
+    m_data.m_point = _ray->getOrigin() + _ray->getDirection() * t;
     m_data.m_normal = glm::normalize(m_data.m_point - m_position);
 
     return true;
 }
 
-glm::vec3 Sphere::shadePixel(const Ray &_ray)
+glm::vec3 Sphere::shadePixel(std::shared_ptr<Ray> _ray)
 {
     return glm::vec3(0.0f, 0.0f, 0.0f);
 }

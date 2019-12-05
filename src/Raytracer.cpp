@@ -3,7 +3,7 @@
 #include "Scene.h"
 #include "Sphere.h"
 
-glm::vec3 Raytracer::RayTrace(const Ray &_ray, std::shared_ptr<Scene> _scene)
+glm::vec3 Raytracer::RayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> _scene)
 {
     std::vector<std::shared_ptr<Object>>::iterator objIterator;
     std::vector<std::shared_ptr<Object>>::iterator storeObj;

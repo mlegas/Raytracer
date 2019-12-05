@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include <random>
 #include <SDL2/SDL.h>
 #include "MCG_GFX_Lib.h"
 #include "Camera.h"
@@ -23,22 +24,37 @@ int main()
      * parameters are RGBA, numbers are from 0 to 255 */
     MCG::SetBackground( glm::ivec3(255,255,255) );
 
-    float fov = 90.0f;
+    float fov = 60.0f;
+    int samples = 4;
 
     std::shared_ptr<Camera> camera = std::make_shared<Camera>(windowSize, fov);
 	std::shared_ptr<Raytracer> raytracer = std::make_shared<Raytracer>();
 	std::shared_ptr<Scene> scene = std::make_shared<Scene>();
-	glm::ivec2 currentPixel;
+
+    glm::ivec2 currentPixelI;
+    glm::vec2 currentPixel;
+    glm::vec3 pixelColour;
+
+    std::default_random_engine generator;
+    std::uniform_real_distribution<float> distribution(-0.5f,0.5f);
 
 	for (int x = 0; x < windowSize.x; x++)
 	{
 		for (int y = 0; y < windowSize.y; y++)
-		{
-			currentPixel = glm::ivec2(x, y);
+        {
+            pixelColour = glm::vec3(0.0f, 0.0f, 0.0f);
+            currentPixelI = glm::ivec2(x, y);
 
-			glm::vec3 pixelColour = raytracer->RayTrace(camera->CreateRay(currentPixel), scene);
+            for (int i = 0; i < samples; i++)
+            {
+                float sample = distribution(generator);
+                currentPixel = glm::vec2((float) x + sample, (float) y + sample);
+                pixelColour = pixelColour + raytracer->RayTrace(camera->CreateRay(currentPixel), scene);
+            }
 
-            MCG::DrawPixel(currentPixel, pixelColour);
+            pixelColour = pixelColour / (float) samples;
+
+            MCG::DrawPixel(currentPixelI, pixelColour);
 		}
 	}
 

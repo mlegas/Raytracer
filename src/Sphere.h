@@ -8,8 +8,8 @@ private:
 	float m_radius;
     float m_radiusSquared;
 public:
-    glm::vec3 shadePixel(const Ray &_ray);
-    bool intersect(const Ray &_ray);
+    glm::vec3 shadePixel(std::shared_ptr<Ray> _ray);
+    bool intersect(std::shared_ptr<Ray> _ray);
 	float getRadius();
     float getRadiusSquared();
     Sphere(glm::vec3 _position, float _radius);
