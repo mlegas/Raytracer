@@ -1,3 +1,4 @@
+#include <glm/ext.hpp>
 #include "Ray.h"
 #include "Sphere.h"
 

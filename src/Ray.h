@@ -1,4 +1,4 @@
-#include <glm/ext.hpp>
+#include <glm/vec3.hpp>
 #include <vector>
 #include <memory>
 

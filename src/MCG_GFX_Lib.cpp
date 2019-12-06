@@ -81,12 +81,14 @@ void MCG::SetBackground( glm::ivec3 colour )
 
 }
 
-void MCG::DrawPixel( glm::ivec2 position, glm::ivec3 colour )
+void MCG::DrawPixel( glm::ivec2 position, glm::ivec3 colour, std::mutex &_mtx )
 {
+    _mtx.lock();
 	// Set the colour for drawing
 	SDL_SetRenderDrawColor( _renderer, colour.r, colour.g, colour.b, 255 );
 	// Draw our pixelx
 	SDL_RenderDrawPoint( _renderer, position.x, position.y );
+    _mtx.unlock();
 }
 
 

@@ -14,3 +14,8 @@ float Object::getIntersectionDistance()
 {
     return m_data.m_distance;
 }
+
+glm::vec3 Object::getIntersectionPoint()
+{
+    return m_data.m_point;
+}

@@ -1,5 +1,5 @@
 #include "Object.h"
-#include <glm/ext.hpp>
+#include <glm/vec3.hpp>
 #include <memory>
 
 class Sphere : public Object
