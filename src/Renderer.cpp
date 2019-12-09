@@ -96,7 +96,7 @@ void Renderer::goThroughPixels(int _startValue, int _interval, int _threadId)
                 pixelColour = pixelColour + m_raytracer->rayTrace(m_camera->createRay(currentPixel), m_scene);
             }
 
-            pixelColour = pixelColour / m_samples;
+            pixelColour = glm::vec3(pixelColour.x / m_samples, pixelColour.y / m_samples, pixelColour.z / m_samples);
 
             MCG::DrawPixel(currentPixelI, pixelColour, m_threadManager->m_mtx);
         }

@@ -89,15 +89,16 @@ bool Sphere::intersect(std::shared_ptr<Ray> _ray)
 
 glm::vec3 Sphere::shadePixel(std::shared_ptr<Ray> _ray)
 {
-    glm::vec3 v = -(_ray->getDirection());
-    float facingRatio = std::max(0.0f, glm::dot(v, m_data.m_normal)) * 255.0f;
-    return glm::vec3(facingRatio, facingRatio, facingRatio);
+   // glm::vec3 v = -(_ray->getDirection());
+ //   float facingRatio = std::max(0.0f, glm::dot(v, m_data.m_normal)) * 255.0f;
+    return glm::vec3(1.0f, 1.0f, 0.0f);
 }
 
-Sphere::Sphere(glm::vec3 _position, float _radius)
+Sphere::Sphere(glm::vec3 _position, float _radius, float _specular)
 {
 	m_position = _position;
 	m_radius = _radius;
     m_radiusSquared = m_radius * m_radius;
+    m_specular = _specular;
     m_centerToOriginSet = false;
 }

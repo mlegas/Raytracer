@@ -20,7 +20,7 @@ private:
 
     glm::ivec2 m_windowSize;
     float m_fov;
-    float m_samples;
+    int m_samples;
 
     void goThroughPixels(int _startValue, int _interval, int _threadId);
 public:

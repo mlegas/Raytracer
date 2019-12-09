@@ -13,5 +13,5 @@ private:
 public:
     glm::vec3 shadePixel(std::shared_ptr<Ray> _ray);
     bool intersect(std::shared_ptr<Ray> _ray);
-    Sphere(glm::vec3 _position, float _radius);
+    Sphere(glm::vec3 _position, float _radius, float _specular);
 };

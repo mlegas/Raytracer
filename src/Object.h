@@ -11,10 +11,12 @@ class Object
 	protected:
 		glm::vec3 m_position;
         IntersectionData m_data;
+        float m_specular;
       //  Texture m_texture;
 	public:
         virtual glm::vec3 shadePixel(std::shared_ptr<Ray> _ray) = 0;
         virtual bool intersect(std::shared_ptr<Ray> _ray) = 0;
+        float getSpecular();
 		glm::vec3 getPosition();
         float getIntersectionDistance();
         glm::vec3 getIntersectionNormal();

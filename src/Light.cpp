@@ -4,27 +4,24 @@
 Light::Light(glm::vec3 _colour, float _intensity)
 {
     m_lightType = ambient;
-    m_colour = _colour / 255.0f;
+    m_colour = _colour;
     m_intensity = _intensity;
-    m_light = m_intensity * m_colour;
 }
 
 Light::Light(glm::vec3 _colour, float _intensity, glm::vec3 _direction)
 {
     m_lightType = directional;
-    m_colour = _colour / 255.0f;
+    m_colour = _colour;
     m_intensity = _intensity;
-    m_direction = glm::normalize(_direction);
-    m_light = m_intensity * m_colour;
+    m_direction = glm::normalize(-_direction);
 }
 
 Light::Light(glm::vec3 _position, glm::vec3 _colour, float _intensity)
 {
     m_lightType = spherical;
-    m_position = _position;
-    m_colour = _colour / 255.0f;
+    m_position = -_position;
+    m_colour = _colour;
     m_intensity = _intensity;
-    m_light = m_intensity * m_colour;
 }
 
 LightType Light::getLightType()
@@ -32,9 +29,14 @@ LightType Light::getLightType()
     return m_lightType;
 }
 
-glm::vec3 Light::getLight()
+float Light::getLightIntensity()
 {
-    return m_light;
+    return m_intensity;
+}
+
+glm::vec3 Light::getLightColour()
+{
+    return m_colour;
 }
 
 glm::vec3 Light::getPosition()

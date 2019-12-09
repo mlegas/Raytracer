@@ -10,6 +10,11 @@ void Object::setPosition(const glm::vec3 &_position)
 	m_position = _position;
 }
 
+float Object::getSpecular()
+{
+    return m_specular;
+}
+
 float Object::getIntersectionDistance()
 {
     return m_data.m_distance;
