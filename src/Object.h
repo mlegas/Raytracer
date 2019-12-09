@@ -17,6 +17,7 @@ class Object
         virtual bool intersect(std::shared_ptr<Ray> _ray) = 0;
 		glm::vec3 getPosition();
         float getIntersectionDistance();
+        glm::vec3 getIntersectionNormal();
         glm::vec3 getIntersectionPoint();
         void setPosition(const glm::vec3& _position);
 };

@@ -1,13 +1,20 @@
 #include <glm/ext.hpp>
+#include <algorithm>
 #include "Ray.h"
 #include "Sphere.h"
 
 bool Sphere::intersect(std::shared_ptr<Ray> _ray)
 {
-    glm::vec3 centerToOrigin = _ray->getOrigin() - m_position;
+    if (!m_centerToOriginSet)
+    {
+        m_centerToOrigin = _ray->getOrigin() - m_position;
+        m_centerToOriginSquared = glm::dot(m_centerToOrigin, m_centerToOrigin);
+        m_centerToOriginSet = true;
+    }
+
     float a = glm::dot(_ray->getDirection(), _ray->getDirection());
-    float b = 2.0f * glm::dot(_ray->getDirection(), centerToOrigin);
-    float c = glm::dot(centerToOrigin, centerToOrigin) - m_radiusSquared;
+    float b = 2.0f * glm::dot(_ray->getDirection(), m_centerToOrigin);
+    float c = m_centerToOriginSquared - m_radiusSquared;
 
     float discriminant = (b * b) - (4 * a * c);
 
@@ -82,17 +89,9 @@ bool Sphere::intersect(std::shared_ptr<Ray> _ray)
 
 glm::vec3 Sphere::shadePixel(std::shared_ptr<Ray> _ray)
 {
-    return glm::vec3(0.0f, 0.0f, 0.0f);
-}
-
-float Sphere::getRadius()
-{
-	return m_radius;
-}
-
-float Sphere::getRadiusSquared()
-{
-    return m_radiusSquared;
+    glm::vec3 v = -(_ray->getDirection());
+    float facingRatio = std::max(0.0f, glm::dot(v, m_data.m_normal)) * 255.0f;
+    return glm::vec3(facingRatio, facingRatio, facingRatio);
 }
 
 Sphere::Sphere(glm::vec3 _position, float _radius)
@@ -100,4 +99,5 @@ Sphere::Sphere(glm::vec3 _position, float _radius)
 	m_position = _position;
 	m_radius = _radius;
     m_radiusSquared = m_radius * m_radius;
+    m_centerToOriginSet = false;
 }

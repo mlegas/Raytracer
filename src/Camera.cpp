@@ -2,7 +2,7 @@
 #include "Camera.h"
 #include "Ray.h"
 
-std::shared_ptr<Ray> Camera::CreateRay(glm::vec2 _pixelCoords)
+std::shared_ptr<Ray> Camera::createRay(glm::vec2 _pixelCoords)
 {
     float cameraX = (2.0f * ((_pixelCoords.x + 0.5f) / m_windowSize.x) - 1.0f) * m_fovFactor * m_aspectRatio;
     float cameraY = (1.0f - 2.0f * ((_pixelCoords.y + 0.5f) / m_windowSize.y)) * m_fovFactor;

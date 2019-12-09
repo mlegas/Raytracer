@@ -13,7 +13,7 @@ private:
     glm::mat4 m_view;
 	
 public:
-    std::shared_ptr<Ray> CreateRay(glm::vec2 _pixelCoords);
+    std::shared_ptr<Ray> createRay(glm::vec2 _pixelCoords);
     Camera(glm::vec2 _windowSize, float _fov);
 	~Camera();
 };

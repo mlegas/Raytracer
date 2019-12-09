@@ -7,6 +7,7 @@
 #include "Raytracer.h"
 #include "Scene.h"
 #include "Renderer.h"
+#include "Texture.h"
 
 int main()
 {
@@ -22,7 +23,10 @@ int main()
         return -1;
     }
 
+    //Texture texture("/home/maciej/Pobrane/tvpis85ac58.jpg");
+
     renderer->run();
+
 
 	return 0;
 }

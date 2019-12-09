@@ -1,32 +1,66 @@
+#include <glm/ext.hpp>
+#include <exception>
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 #include "Sphere.h"
 #include "Texture.h"
 
 Texture::Texture(std::string _filename)
 {
+    m_width = 0;
+    m_height = 0;
+    m_channels = 0;
+
+    m_data = stbi_load(_filename.c_str(), &m_width, &m_height, &m_channels, 4);
+
+    if (!m_data)
+    {
+      throw std::exception();
+    }
+
     m_pi = 3.1415926535897f;
+}
+
+Texture::~Texture()
+{
+    stbi_image_free(m_data);
 }
 
 glm::vec3 Texture::getTextureColourSphere(std::shared_ptr<Sphere> _sphere)
 {
-        float phi = atan2(_sphere->getIntersectionPoint().z, _sphere->getIntersectionPoint().x);
+        float phi = atan2(_sphere->getIntersectionPoint().x, _sphere->getIntersectionPoint().z);
         float theta = asin(_sphere->getIntersectionPoint().y);
-        float u = 1.0f - (phi + m_pi) / (2.0f * m_pi);
+        float u = (phi + m_pi) / (2.0f * m_pi);
         float v = (theta + m_pi / 2.0f) / m_pi;
 
         int i = u * m_width;
-        int j = (1 - v) * m_height - 0.001;
+        int j = (1 - v) * m_height;
 
-        if (i < 0) i = 0;
-        if (j < 0) j = 0;
+        if (i < 0)
+        {
+            i = 0;
+        }
 
-//        if (i > nx - 1) i = nx - 1;
-//        if (j > ny - 1) j = ny - 1;
+        else if (i > m_width - 1)
+        {
+            i = m_width - 1;
+        }
 
-//        float r = int(data[3 * i + 3 * nx*j]  ) / 255.0;
-//        float g = int(data[3 * i + 3 * nx*j+1]) / 255.0;
-//        float b = int(data[3 * i + 3 * nx*j+2]) / 255.0;
+        if (j < 0)
+        {
+            j = 0;
+        }
 
-//            return vec3(r, g, b);
+        else if (j > m_height - 1)
+        {
+            j = m_height - 1;
+        }
+
+        float r = m_data[3 * i + 3 * m_width * j];
+        float g = m_data[3 * i + 3 * m_width * j + 1];
+        float b = m_data[3 * i + 3 * m_width * j + 2];
+
+        return glm::vec3(r, g, b);
 }
 
 //glm::vec3 Texture::getTextureColourPlane()
