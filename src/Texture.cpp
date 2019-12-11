@@ -17,8 +17,6 @@ Texture::Texture(std::string _filename)
     {
       throw std::exception();
     }
-
-    m_pi = 3.1415926535897f;
 }
 
 Texture::~Texture()
@@ -30,11 +28,11 @@ glm::vec3 Texture::getTextureColourSphere(std::shared_ptr<Sphere> _sphere)
 {
         float phi = atan2(_sphere->getIntersectionPoint().x, _sphere->getIntersectionPoint().z);
         float theta = asin(_sphere->getIntersectionPoint().y);
-        float u = (phi + m_pi) / (2.0f * m_pi);
-        float v = (theta + m_pi / 2.0f) / m_pi;
+        float u = (phi + M_PI) / (2.0f * M_PI);
+        float v = (theta + M_PI / 2.0f) / M_PI;
 
         int i = u * m_width;
-        int j = (1 - v) * m_height;
+        int j = (1.0f - v) * m_height;
 
         if (i < 0)
         {

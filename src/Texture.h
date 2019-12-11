@@ -10,7 +10,6 @@ private:
     int m_width;
     int m_height;
     int m_channels;
-    float m_pi;
     unsigned char* m_data;
 public:
     Texture(std::string _filename);

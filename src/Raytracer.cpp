@@ -34,7 +34,7 @@ glm::vec3 Raytracer::rayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> 
 
     if (anythingHit)
 	{
-        glm::vec3 colour = (*storeObj)->shadePixel(_ray) * computeLighting(_scene, *storeObj, -_ray->getDirection());
+        glm::vec3 colour = (*storeObj)->shadePixel(_ray) * computeLighting(_scene->getLights(), *storeObj);
 
         colour = glm::vec3(glm::clamp((colour.x * 255.0f), 0.0f, 255.0f),
                            glm::clamp((colour.y * 255.0f), 0.0f, 255.0f),
@@ -49,16 +49,16 @@ glm::vec3 Raytracer::rayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> 
     }
 }
 
-glm::vec3 Raytracer::computeLighting(std::shared_ptr<Scene> _scene, std::shared_ptr<Object> _object, glm::vec3 _direction)
+glm::vec3 Raytracer::computeLighting(std::shared_ptr<std::vector<std::shared_ptr<Light>>> _lights, std::shared_ptr<Object> _object)
 {
     std::vector<std::shared_ptr<Light>>::iterator lightIterator;
     glm::vec3 totalLight(0.0f);
 
-    for (lightIterator = _scene->getLights()->begin(); lightIterator != _scene->getLights()->end(); lightIterator++)
+    for (lightIterator = _lights->begin(); lightIterator != _lights->end(); lightIterator++)
     {
        if ((*lightIterator)->getLightType() == ambient)
        {
-           totalLight += (*lightIterator)->getLightIntensity();
+           totalLight += (*lightIterator)->getLight();
        }
 
        else
@@ -82,22 +82,9 @@ glm::vec3 Raytracer::computeLighting(std::shared_ptr<Scene> _scene, std::shared_
 
            if (diffuseProjection > 0.0f)
            {
-                totalLight += (*lightIterator)->getLightIntensity() * diffuseProjection;
+                totalLight += (*lightIterator)->getLight() * diffuseProjection;
            }
-
-            // Specular
-            if (_object->getSpecular() >= 0.0f)
-            {
-                glm::vec3 reflectedRay = 2.0f * _object->getIntersectionNormal() * glm::dot(_object->getIntersectionNormal(), lightRay) - intersectionToLight;
-                float specularProjection = glm::dot(reflectedRay, _direction);
-
-                if (specularProjection > 0.0f)
-                {
-                    totalLight += (*lightIterator)->getLightIntensity() * static_cast<float>(pow(specularProjection, _object->getSpecular()));
-                }
-            }
        }
-       totalLight += totalLight * (*lightIterator)->getLightColour();
     }
 
     return totalLight;
