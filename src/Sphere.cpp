@@ -3,13 +3,15 @@
 #include "Ray.h"
 #include "Sphere.h"
 
-bool Sphere::intersect(std::shared_ptr<Ray> _ray)
+std::shared_ptr<IntersectionData> Sphere::intersect(std::shared_ptr<Ray> _ray)
 {
     if (!m_centerToOriginSet)
     {
+        m_mtx.lock();
         m_centerToOrigin = _ray->getOrigin() - m_position;
         m_centerToOriginSquared = glm::dot(m_centerToOrigin, m_centerToOrigin);
         m_centerToOriginSet = true;
+        m_mtx.unlock();
     }
 
     float a = glm::dot(_ray->getDirection(), _ray->getDirection());
@@ -24,7 +26,7 @@ bool Sphere::intersect(std::shared_ptr<Ray> _ray)
 
     if (discriminant < 0.0f)
     {
-        return false; // no intersection
+        return std::make_shared<IntersectionData>(false); // no intersection
     }
 
     else if (discriminant < std::numeric_limits<float>::epsilon())
@@ -54,7 +56,7 @@ bool Sphere::intersect(std::shared_ptr<Ray> _ray)
 
     if (t0 < 0 && t1 < 0)
     {
-        return false;
+        return std::make_shared<IntersectionData>(false);
     }
 
     else if (t0 < 0 && t1 >= 0)
@@ -80,11 +82,10 @@ bool Sphere::intersect(std::shared_ptr<Ray> _ray)
         }
     }
 
-    m_data.m_distance = t;
-    m_data.m_point = _ray->getOrigin() + _ray->getDirection() * t;
-    m_data.m_normal = glm::normalize(m_data.m_point - m_position);
-
-    return true;
+    float distance = t;
+    glm::vec3 point = _ray->getOrigin() + _ray->getDirection() * t;
+    glm::vec3 normal = glm::normalize(point - m_position);
+    return std::make_shared<IntersectionData>(true, distance, point, normal);
 }
 
 glm::vec3 Sphere::shadePixel(std::shared_ptr<Ray> _ray)

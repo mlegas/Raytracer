@@ -1,6 +1,7 @@
 //#include "Texture.h"
 #include "IntersectionData.h"
 #include "Material.h"
+#include <mutex>
 #include <memory>
 #include <glm/vec3.hpp>
 
@@ -10,18 +11,14 @@ class Ray;
 class Object
 {
 	protected:
-		glm::vec3 m_position;
-        IntersectionData m_data;
+        glm::vec3 m_position;
         Material m_material;
         glm::vec3 m_albedo;
       //  Texture m_texture;
 	public:
         virtual glm::vec3 shadePixel(std::shared_ptr<Ray> _ray) = 0;
-        virtual bool intersect(std::shared_ptr<Ray> _ray) = 0;
+        virtual std::shared_ptr<IntersectionData> intersect(std::shared_ptr<Ray> _ray) = 0;
         glm::vec3 getAlbedo();
 		glm::vec3 getPosition();
-        float getIntersectionDistance();
-        glm::vec3 getIntersectionNormal();
-        glm::vec3 getIntersectionPoint();
         void setPosition(const glm::vec3& _position);
 };

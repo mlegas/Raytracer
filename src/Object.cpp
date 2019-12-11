@@ -14,18 +14,3 @@ glm::vec3 Object::getAlbedo()
 {
     return m_albedo;
 }
-
-float Object::getIntersectionDistance()
-{
-    return m_data.m_distance;
-}
-
-glm::vec3 Object::getIntersectionNormal()
-{
-    return m_data.m_normal;
-}
-
-glm::vec3 Object::getIntersectionPoint()
-{
-    return m_data.m_point;
-}

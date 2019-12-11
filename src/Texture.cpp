@@ -24,42 +24,42 @@ Texture::~Texture()
     stbi_image_free(m_data);
 }
 
-glm::vec3 Texture::getTextureColourSphere(std::shared_ptr<Sphere> _sphere)
-{
-        float phi = atan2(_sphere->getIntersectionPoint().x, _sphere->getIntersectionPoint().z);
-        float theta = asin(_sphere->getIntersectionPoint().y);
-        float u = (phi + M_PI) / (2.0f * M_PI);
-        float v = (theta + M_PI / 2.0f) / M_PI;
+//glm::vec3 Texture::getTextureColourSphere(std::shared_ptr<Sphere> _sphere)
+//{
+//        float phi = atan2(_sphere->getIntersectionPoint().x, _sphere->getIntersectionPoint().z);
+//        float theta = asin(_sphere->getIntersectionPoint().y);
+//        float u = (phi + M_PI) / (2.0f * M_PI);
+//        float v = (theta + M_PI / 2.0f) / M_PI;
 
-        int i = u * m_width;
-        int j = (1.0f - v) * m_height;
+//        int i = u * m_width;
+//        int j = (1.0f - v) * m_height;
 
-        if (i < 0)
-        {
-            i = 0;
-        }
+//        if (i < 0)
+//        {
+//            i = 0;
+//        }
 
-        else if (i > m_width - 1)
-        {
-            i = m_width - 1;
-        }
+//        else if (i > m_width - 1)
+//        {
+//            i = m_width - 1;
+//        }
 
-        if (j < 0)
-        {
-            j = 0;
-        }
+//        if (j < 0)
+//        {
+//            j = 0;
+//        }
 
-        else if (j > m_height - 1)
-        {
-            j = m_height - 1;
-        }
+//        else if (j > m_height - 1)
+//        {
+//            j = m_height - 1;
+//        }
 
-        float r = m_data[3 * i + 3 * m_width * j];
-        float g = m_data[3 * i + 3 * m_width * j + 1];
-        float b = m_data[3 * i + 3 * m_width * j + 2];
+//        float r = m_data[3 * i + 3 * m_width * j];
+//        float g = m_data[3 * i + 3 * m_width * j + 1];
+//        float b = m_data[3 * i + 3 * m_width * j + 2];
 
-        return glm::vec3(r, g, b);
-}
+//        return glm::vec3(r, g, b);
+//}
 
 //glm::vec3 Texture::getTextureColourPlane()
 //{

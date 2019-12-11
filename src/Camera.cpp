@@ -17,7 +17,7 @@ std::shared_ptr<Ray> Camera::createRay(glm::vec2 _pixelCoords)
 
     glm::vec3 dir = glm::vec3(glm::normalize(direction));
 
-    std::shared_ptr<Ray> ray = std::make_shared<Ray>(origin, dir);
+    std::shared_ptr<Ray> ray = std::make_shared<Ray>(normal, origin, dir);
 	return ray;
 }
 
