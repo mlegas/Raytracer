@@ -1,3 +1,6 @@
+#ifndef _INTERSECTIONDATA_H_
+#define _INTERSECTIONDATA_H_
+
 #include <glm/vec3.hpp>
 
 class IntersectionData
@@ -10,8 +13,10 @@ private:
 public:
     IntersectionData(bool _intersection);
     IntersectionData(bool _intersection, float _distance, glm::vec3 _point, glm::vec3 _normal);
-    bool hasIntersected();
-    float getIntersectionDistance();
-    glm::vec3 getIntersectionNormal();
-    glm::vec3 getIntersectionPoint();
+    bool HasIntersected();
+    float GetIntersectionDistance();
+    glm::vec3 GetIntersectionNormal();
+    glm::vec3 GetIntersectionPoint();
 };
+
+#endif

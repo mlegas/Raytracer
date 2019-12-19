@@ -1,24 +1,28 @@
-//#include "Texture.h"
+#ifndef _OBJECT_H_
+#define _OBJECT_H_
+
 #include "IntersectionData.h"
 #include "Material.h"
 #include <mutex>
 #include <memory>
 #include <glm/vec3.hpp>
 
+class Scene;
 class Ray;
-//class Texture;
 
 class Object
 {
 	protected:
         glm::vec3 m_position;
-        Material m_material;
-        glm::vec3 m_albedo;
-      //  Texture m_texture;
-	public:
-        virtual glm::vec3 shadePixel(std::shared_ptr<Ray> _ray) = 0;
-        virtual std::shared_ptr<IntersectionData> intersect(std::shared_ptr<Ray> _ray) = 0;
-        glm::vec3 getAlbedo();
-		glm::vec3 getPosition();
-        void setPosition(const glm::vec3& _position);
+        std::shared_ptr<Material> m_material;
+        float m_albedo;
+        glm::vec3 CalculateDiffuseColour(std::shared_ptr<IntersectionData> _data, std::shared_ptr<Scene> _scene);
+    public:
+        glm::vec3 ShadePixel(std::shared_ptr<IntersectionData> _data, std::shared_ptr<Scene> _scene);
+        virtual std::shared_ptr<IntersectionData> Intersect(std::shared_ptr<Ray> _ray) = 0;
+        glm::vec3 GetPosition();
+        MaterialType GetMaterialType();
+        void SetPosition(const glm::vec3& _position);
 };
+
+#endif

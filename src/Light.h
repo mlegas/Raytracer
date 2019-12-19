@@ -1,25 +1,20 @@
-#include <glm/vec3.hpp>
+#ifndef _LIGHT_H_
+#define _LIGHT_H_
 
-enum LightType
-{
-    ambient, directional, spherical
-};
+#include <glm/vec3.hpp>
+#include <memory>
+#include <vector>
+
+class Object;
+class IntersectionData;
 
 class Light
 {
-private:
-    glm::vec3 m_position;
-    glm::vec3 m_direction;
+protected:
     float m_intensity;
-    LightType m_lightType;
     glm::vec3 m_colour;
-    glm::vec3 m_light;
 public:
-    Light(glm::vec3 _colour, float _intensity);
-    Light(glm::vec3 _colour, float _intensity, glm::vec3 _direction);
-    Light(glm::vec3 _colour, glm::vec3 _position, float _intensity);
-    LightType getLightType();
-    glm::vec3 getLight();
-    glm::vec3 getPosition();
-    glm::vec3 getDirection();
+    virtual glm::vec3 CalculateLight(std::shared_ptr<IntersectionData> _data, std::shared_ptr<std::vector<std::shared_ptr<Object>>> _objects, float _albedo) = 0;
 };
+
+#endif

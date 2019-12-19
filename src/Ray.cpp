@@ -1,24 +1,18 @@
 #include "Ray.h"
 #include <memory>
 
-Ray::Ray(RayType _rayType, glm::vec3 _origin, glm::vec3 _direction)
+Ray::Ray(glm::vec3 _origin, glm::vec3 _direction)
 {
-    m_rayType = _rayType;
     m_origin = _origin;
     m_direction = _direction;
 }
 
-glm::vec3 Ray::getOrigin()
+glm::vec3 Ray::GetOrigin()
 {
     return m_origin;
 }
 
-glm::vec3 Ray::getDirection()
+glm::vec3 Ray::GetDirection()
 {
     return m_direction;
-}
-
-RayType Ray::getType()
-{
-    return m_rayType;
 }

@@ -16,7 +16,7 @@ Renderer::Renderer(glm::ivec2 _windowSize, float _fov, int _samples)
     m_samples = _samples;
 }
 
-bool Renderer::init()
+bool Renderer::Init()
 {   
     /** Call MCG::Init to initialise and create your window
      *  Tell it what size you want the window to be */
@@ -33,7 +33,7 @@ bool Renderer::init()
 
     m_threadManager = std::make_shared<ThreadManager>();
 
-    if (!m_threadManager->init(m_windowSize))
+    if (!m_threadManager->Init(m_windowSize))
     {
         return -1;
     }
@@ -45,7 +45,7 @@ bool Renderer::init()
     return true;
 }
 
-void Renderer::run()
+void Renderer::Run()
 {
     std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
 
@@ -60,7 +60,7 @@ void Renderer::run()
 
     for (uint t = 0; t < m_threadManager->m_threadsAmount; t++)
     {
-        m_threadManager->m_threads.push_back(std::thread(&Renderer::goThroughPixels, this, startValues.at(t), m_threadManager->m_intervals.at(t), t));
+        m_threadManager->m_threads.push_back(std::thread(&Renderer::MainLoop, this, startValues.at(t), m_threadManager->m_intervals.at(t), t));
     }
 
     for (uint t = 0; t < m_threadManager->m_threadsAmount; t++)
@@ -77,7 +77,7 @@ void Renderer::run()
     MCG::Cleanup();
 }
 
-void Renderer::goThroughPixels(int _startValue, int _interval, int _threadId)
+void Renderer::MainLoop(int _startValue, int _interval, int _threadId)
 {
     std::default_random_engine generator;
     std::uniform_real_distribution<float> distribution(-0.5f,0.5f);
@@ -93,7 +93,7 @@ void Renderer::goThroughPixels(int _startValue, int _interval, int _threadId)
             {
                 float sample = distribution(generator);
                 glm::vec2 currentPixel = glm::vec2(static_cast<float>(x) + sample, static_cast<float>(y) + sample);
-                pixelColour = pixelColour + m_raytracer->rayTrace(m_camera->createRay(currentPixel), m_scene);
+                pixelColour = pixelColour + m_raytracer->RayTrace(m_camera->CreateRay(currentPixel), m_scene);
             }
 
             pixelColour = glm::vec3(pixelColour.x / m_samples, pixelColour.y / m_samples, pixelColour.z / m_samples);

@@ -1,3 +1,6 @@
+#ifndef _RENDERER_H_
+#define _RENDERER_H_
+
 #include <memory>
 #include <mutex>
 #include <vector>
@@ -22,9 +25,11 @@ private:
     float m_fov;
     int m_samples;
 
-    void goThroughPixels(int _startValue, int _interval, int _threadId);
+    void MainLoop(int _startValue, int _interval, int _threadId);
 public:
     Renderer(glm::ivec2 _windowSize, float _fov, int _samples);
-    bool init();
-    void run();
+    bool Init();
+    void Run();
 };
+
+#endif

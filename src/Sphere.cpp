@@ -1,22 +1,17 @@
 #include <glm/ext.hpp>
 #include <algorithm>
+#include <iostream>
 #include "Ray.h"
 #include "Sphere.h"
 
-std::shared_ptr<IntersectionData> Sphere::intersect(std::shared_ptr<Ray> _ray)
+std::shared_ptr<IntersectionData> Sphere::Intersect(std::shared_ptr<Ray> _ray)
 {
-    if (!m_centerToOriginSet)
-    {
-        m_mtx.lock();
-        m_centerToOrigin = _ray->getOrigin() - m_position;
-        m_centerToOriginSquared = glm::dot(m_centerToOrigin, m_centerToOrigin);
-        m_centerToOriginSet = true;
-        m_mtx.unlock();
-    }
+    glm::vec3 centerToOrigin = _ray->GetOrigin() - m_position;
+    float centerToOriginSquared = glm::dot(centerToOrigin, centerToOrigin);
 
-    float a = glm::dot(_ray->getDirection(), _ray->getDirection());
-    float b = 2.0f * glm::dot(_ray->getDirection(), m_centerToOrigin);
-    float c = m_centerToOriginSquared - m_radiusSquared;
+    float a = glm::dot(_ray->GetDirection(), _ray->GetDirection());
+    float b = 2.0f * glm::dot(_ray->GetDirection(), centerToOrigin);
+    float c = centerToOriginSquared - m_radiusSquared;
 
     float discriminant = (b * b) - (4 * a * c);
 
@@ -83,23 +78,15 @@ std::shared_ptr<IntersectionData> Sphere::intersect(std::shared_ptr<Ray> _ray)
     }
 
     float distance = t;
-    glm::vec3 point = _ray->getOrigin() + _ray->getDirection() * t;
+    glm::vec3 point = _ray->GetOrigin() + _ray->GetDirection() * t;
     glm::vec3 normal = glm::normalize(point - m_position);
     return std::make_shared<IntersectionData>(true, distance, point, normal);
 }
 
-glm::vec3 Sphere::shadePixel(std::shared_ptr<Ray> _ray)
-{
-   // glm::vec3 v = -(_ray->getDirection());
- //   float facingRatio = std::max(0.0f, glm::dot(v, m_data.m_normal)) * 255.0f;
-    return m_albedo;
-}
-
-Sphere::Sphere(glm::vec3 _position, float _radius, glm::vec3 _albedo)
+Sphere::Sphere(glm::vec3 _position, float _radius, std::shared_ptr<Material> _material)
 {
 	m_position = _position;
 	m_radius = _radius;
     m_radiusSquared = m_radius * m_radius;
-    m_albedo = _albedo;
-    m_centerToOriginSet = false;
+    m_material = _material;
 }

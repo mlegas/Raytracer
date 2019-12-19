@@ -1,21 +1,21 @@
 #include "IntersectionData.h"
 
-float IntersectionData::getIntersectionDistance()
+float IntersectionData::GetIntersectionDistance()
 {
     return m_distance;
 }
 
-glm::vec3 IntersectionData::getIntersectionNormal()
+glm::vec3 IntersectionData::GetIntersectionNormal()
 {
     return m_normal;
 }
 
-glm::vec3 IntersectionData::getIntersectionPoint()
+glm::vec3 IntersectionData::GetIntersectionPoint()
 {
     return m_point;
 }
 
-bool IntersectionData::hasIntersected()
+bool IntersectionData::HasIntersected()
 {
     return m_intersection;
 }

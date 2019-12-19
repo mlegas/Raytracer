@@ -1,6 +1,6 @@
 #include "ThreadManager.h"
 
-bool ThreadManager::init(glm::ivec2 _windowSize)
+bool ThreadManager::Init(glm::ivec2 _windowSize)
 {
     m_threadsAmount = std::thread::hardware_concurrency();
 
@@ -12,6 +12,8 @@ bool ThreadManager::init(glm::ivec2 _windowSize)
         // return -1;
         // change above lines if safety & reliability is more important
     }
+
+    m_threadsAmount = 1;
 
     int xInterval = _windowSize.x / m_threadsAmount;
     int xRemainder = _windowSize.x % m_threadsAmount;

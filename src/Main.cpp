@@ -13,11 +13,11 @@ int main()
 {
     glm::ivec2 windowSize = glm::ivec2(800, 800);
     float fov = 60.0f;
-    int samples = 4;
+    int samples = 1;
 
     std::shared_ptr<Renderer> renderer = std::make_shared<Renderer>(windowSize, fov, samples);
 
-    if (!renderer->init())
+    if (!renderer->Init())
     {
         // MCG unable to initialize or (if enabled) CPU thread information obscured
         return -1;
@@ -25,7 +25,7 @@ int main()
 
     //Texture texture("/home/maciej/Pobrane/tvpis85ac58.jpg");
 
-    renderer->run();
+    renderer->Run();
 
 
 	return 0;

@@ -7,7 +7,7 @@
 #include "Scene.h"
 #include "Sphere.h"
 
-glm::vec3 Raytracer::rayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> _scene)
+glm::vec3 Raytracer::RayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> _scene)
 {
     std::vector<std::shared_ptr<Object>>::iterator objIterator;
     std::vector<std::shared_ptr<Object>>::iterator storeObj;
@@ -17,20 +17,20 @@ glm::vec3 Raytracer::rayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> 
 	bool anythingHit = false;
     float nearestDistance = FLT_MAX;
 
-    for (objIterator = _scene->getObjects()->begin(); objIterator != _scene->getObjects()->end(); objIterator++)
+    for (objIterator = _scene->GetObjects()->begin(); objIterator != _scene->GetObjects()->end(); objIterator++)
     {
-        data = (*objIterator)->intersect(_ray);
+        data = (*objIterator)->Intersect(_ray);
 
-        if (data->hasIntersected())
+        if (data->HasIntersected())
         {
             if (!anythingHit)
             {
                 anythingHit = true;
             }
 
-            if (nearestDistance > data->getIntersectionDistance())
+            if (nearestDistance > data->GetIntersectionDistance())
             {
-                nearestDistance = data->getIntersectionDistance();
+                nearestDistance = data->GetIntersectionDistance();
                 storeObj = objIterator;
                 storeData = std::make_shared<IntersectionData>(*data);
             }
@@ -38,8 +38,8 @@ glm::vec3 Raytracer::rayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> 
 	}
 
     if (anythingHit)
-	{
-        glm::vec3 colour = (*storeObj)->shadePixel(_ray) * computeLighting(_scene->getLights(), storeData);
+	{        
+        glm::vec3 colour = (*storeObj)->ShadePixel(storeData, _scene);
 
         colour = glm::vec3(glm::clamp((colour.x * 255.0f), 0.0f, 255.0f),
                            glm::clamp((colour.y * 255.0f), 0.0f, 255.0f),
@@ -50,47 +50,11 @@ glm::vec3 Raytracer::rayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> 
 
     else
     {
-        return glm::vec3(255.0f, 255.0f, 255.0f);
+        return glm::vec3(50.0f, 50.0f, 50.0f);
     }
 }
 
-glm::vec3 Raytracer::computeLighting(std::shared_ptr<std::vector<std::shared_ptr<Light>>> _lights, std::shared_ptr<IntersectionData> _data)
+glm::vec3 Raytracer::Reflect(std::shared_ptr<Ray> _ray, std::shared_ptr<IntersectionData> _data)
 {
-    std::vector<std::shared_ptr<Light>>::iterator lightIterator;
-    glm::vec3 totalLight(0.0f);
-
-    for (lightIterator = _lights->begin(); lightIterator != _lights->end(); lightIterator++)
-    {
-       if ((*lightIterator)->getLightType() == ambient)
-       {
-           totalLight += (*lightIterator)->getLight();
-       }
-
-       else
-       {
-           glm::vec3 intersectionToLight;
-
-           if ((*lightIterator)->getLightType() == spherical)
-           {
-               intersectionToLight = (*lightIterator)->getPosition() - _data->getIntersectionPoint();
-           }
-
-           else
-           {
-               intersectionToLight = (*lightIterator)->getDirection();
-           }
-
-           glm::vec3 lightRay = glm::normalize(intersectionToLight);
-
-           // Diffuse
-           float diffuseProjection = glm::dot(lightRay, _data->getIntersectionNormal());
-
-           if (diffuseProjection > 0.0f)
-           {
-                totalLight += (*lightIterator)->getLight() * diffuseProjection;
-           }
-       }
-    }
-
-    return totalLight;
+        return _ray->GetDirection() - 2.0f * glm::dot(_ray->GetDirection(), _data->GetIntersectionPoint()) * _data->GetIntersectionPoint();
 }

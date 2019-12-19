@@ -3,7 +3,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include "Sphere.h"
-#include "Texture.h"
 
 Texture::Texture(std::string _filename)
 {

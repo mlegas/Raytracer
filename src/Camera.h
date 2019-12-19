@@ -1,3 +1,6 @@
+#ifndef _CAMERA_H_
+#define _CAMERA_H_
+
 #include <glm/vec2.hpp>
 #include <glm/mat4x4.hpp>
 #include <memory>
@@ -13,8 +16,9 @@ private:
     glm::mat4 m_view;
 	
 public:
-    std::shared_ptr<Ray> createRay(glm::vec2 _pixelCoords);
+    std::shared_ptr<Ray> CreateRay(glm::vec2 _pixelCoords);
     Camera(glm::vec2 _windowSize, float _fov);
 	~Camera();
 };
 
+#endif
