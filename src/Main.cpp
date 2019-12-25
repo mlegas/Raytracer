@@ -13,7 +13,7 @@ int main()
 {
     glm::ivec2 windowSize = glm::ivec2(800, 800);
     float fov = 60.0f;
-    int samples = 1;
+    int samples = 4;
 
     std::shared_ptr<Renderer> renderer = std::make_shared<Renderer>(windowSize, fov, samples);
 
@@ -26,7 +26,6 @@ int main()
     //Texture texture("/home/maciej/Pobrane/tvpis85ac58.jpg");
 
     renderer->Run();
-
 
 	return 0;
 }

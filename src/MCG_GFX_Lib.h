@@ -23,7 +23,7 @@ namespace MCG
 	/// Draws a single pixel to screen
 	/// The position parameter is in pixel-coordinates, ranging from 0,0 to the size of the screen set with the Init function. If coordinates are out of bounds, does nothing.
 	/// The colour parameter ranges from 0 to 255. Values outside this range may give unpredictable results.
-    void DrawPixel( glm::ivec2 position, glm::ivec3 colour, std::mutex &_mtx );
+    void DrawPixel( glm::ivec2 position, glm::ivec3 colour);
 
 	/// Displays graphics to screen and keeps window open until user requests exit (pressing escape key or closing window)
 	int ShowAndHold();

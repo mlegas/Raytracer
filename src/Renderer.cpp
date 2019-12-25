@@ -2,6 +2,7 @@
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <cstdlib>
 #include "Camera.h"
 #include "Raytracer.h"
 #include "Scene.h"
@@ -39,7 +40,6 @@ bool Renderer::Init()
     }
 
     m_camera = std::make_shared<Camera>(m_windowSize, m_fov);
-    m_raytracer = std::make_shared<Raytracer>();
     m_scene = std::make_shared<Scene>();
 
     return true;
@@ -47,28 +47,29 @@ bool Renderer::Init()
 
 void Renderer::Run()
 {
-    std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
+    m_deltaTime = std::chrono::system_clock::now();
+    std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
 
     std::vector<int> startValues;
 
     startValues.push_back(0);
 
-    for (uint values = 0; values < m_threadManager->m_threadsAmount - 1; values++)
+    for (uint values = 0; values < m_threadManager->GetThreadsAmount() - 1; values++)
     {
-        startValues.push_back(m_threadManager->m_intervals.at(values));
+        startValues.push_back(m_threadManager->GetIntervals().at(values));
     }
 
-    for (uint t = 0; t < m_threadManager->m_threadsAmount; t++)
+    for (uint t = 0; t < m_threadManager->GetThreadsAmount(); t++)
     {
-        m_threadManager->m_threads.push_back(std::thread(&Renderer::MainLoop, this, startValues.at(t), m_threadManager->m_intervals.at(t), t));
+        m_threadManager->m_threads.push_back(std::thread(&Renderer::MainLoop, this, startValues.at(t), m_threadManager->GetIntervals().at(t), t));
     }
 
-    for (uint t = 0; t < m_threadManager->m_threadsAmount; t++)
+    for (uint t = 0; t < m_threadManager->GetThreadsAmount(); t++)
     {
         m_threadManager->m_threads.at(t).join();
     }
 
-    std::chrono::high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
+    std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
 
     std::cout << "Finished drawing." << std::endl;
     std::cout << "Time spent raytracing: " << std::chrono::duration_cast<std::chrono::seconds>(end - start).count() << "s" << std::endl;
@@ -93,23 +94,43 @@ void Renderer::MainLoop(int _startValue, int _interval, int _threadId)
             {
                 float sample = distribution(generator);
                 glm::vec2 currentPixel = glm::vec2(static_cast<float>(x) + sample, static_cast<float>(y) + sample);
-                pixelColour = pixelColour + m_raytracer->RayTrace(m_camera->CreateRay(currentPixel), m_scene);
+                pixelColour = pixelColour + Raytracer::RayTrace(m_camera->CreateRay(currentPixel), m_scene, 0);
             }
 
             pixelColour = glm::vec3(pixelColour.x / m_samples, pixelColour.y / m_samples, pixelColour.z / m_samples);
 
-            MCG::DrawPixel(currentPixelI, pixelColour, m_threadManager->m_mtx);
+            MCG::DrawPixel(currentPixelI, pixelColour);
         }
 
         int percentDone = ((static_cast<float>(x - _startValue)) / static_cast<float>(_interval - _startValue)) * 100.0f;
+        m_threadManager->SetPercentDone(_threadId, percentDone + 1);
 
-        if (percentDone % 10 == 0 && percentDone > 0)
+        std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(now - m_deltaTime).count() > 500)
         {
-            m_threadManager->m_mtx.lock();
+            std::system("CLS");
 
-            std::cout << "Thread #" << _threadId << ": " << percentDone << "% finished" << std::endl;
+            int total = 0;
 
-            m_threadManager->m_mtx.unlock();
+            for (int t = 0; t < m_threadManager->GetThreadsAmount(); t++)
+            {
+                int percent = m_threadManager->GetPercentDone(t);
+                total += percent;
+
+                m_mtx.lock();
+                std::cout << "Thread #" << t << ": " << percent << "% finished" << std::endl;
+                m_mtx.unlock();
+            }
+
+            total /= m_threadManager->GetThreadsAmount();
+
+            m_mtx.lock();
+            std::cout << "Total percent done: " << total << "%" << std::endl;
+            m_mtx.unlock();
+
+            m_deltaTime = std::chrono::system_clock::now();
         }
+
     }
 }

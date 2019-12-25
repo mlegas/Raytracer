@@ -45,6 +45,5 @@ glm::vec3 SphericalLight::CalculateLight(std::shared_ptr<IntersectionData> _data
     float lightReflected = _albedo / M_PI;
 
     glm::vec3 lightColor = m_colour * lightPower * lightReflected;
-  //  return glm::vec3(1.0f, 1.0f, 1.0f);
     return lightColor;
 }

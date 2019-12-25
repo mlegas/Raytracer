@@ -10,6 +10,7 @@ namespace MCG
 	SDL_Window *_window;
 	glm::ivec2 _winSize;
 	unsigned int _lastTime;
+    std::mutex _mtx;
 }
 
 
@@ -81,7 +82,7 @@ void MCG::SetBackground( glm::ivec3 colour )
 
 }
 
-void MCG::DrawPixel( glm::ivec2 position, glm::ivec3 colour, std::mutex &_mtx )
+void MCG::DrawPixel( glm::ivec2 position, glm::ivec3 colour)
 {
     _mtx.lock();
 	// Set the colour for drawing

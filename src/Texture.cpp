@@ -62,5 +62,20 @@ Texture::~Texture()
 
 //glm::vec3 Texture::getTextureColourPlane()
 //{
+//vec3 computePrimaryTexDir(vec3 normal)
+//{
+//    vec3 a = cross(normal, vec3(1, 0, 0));
+//    vec3 b = cross(normal, vec3(0, 1, 0));
 
+//    vec3 max_ab = dot(a, a) < dot(b, b) ? b : a;
+
+//    vec3 c = cross(normal, vec3(0, 0, 1));
+
+//    return normalize(dot(max_ab, max_ab) < dot(c, c) ? c : max_ab);
+//}
+
+//  …
+
+//    vec3 u = computePrimaryTexDir(normal);
+//    vec3 v = cross(n, u);
 //}

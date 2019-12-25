@@ -12,12 +12,14 @@ class Texture;
 
 class Material
 {
+
 private:
    // Texture m_texture;
     MaterialType m_materialType;
     float m_reflectivity;
-    float m_transparency;
+    float m_refractiveIndex;
     float m_albedo;
+    float m_transparency;
     glm::vec3 m_colour;
 
 public:
@@ -28,6 +30,9 @@ public:
 //    glm::vec3 getTextureValue(std::shared_ptr<Plane> _plane);
     float GetAlbedo();
     glm::vec3 GetColour();
+    float GetReflectivity();
+    float GetRefractiveIndex();
+    float GetTransparency();
 };
 
 #endif

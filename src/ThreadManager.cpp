@@ -13,8 +13,6 @@ bool ThreadManager::Init(glm::ivec2 _windowSize)
         // change above lines if safety & reliability is more important
     }
 
-    m_threadsAmount = 1;
-
     int xInterval = _windowSize.x / m_threadsAmount;
     int xRemainder = _windowSize.x % m_threadsAmount;
 
@@ -32,5 +30,28 @@ bool ThreadManager::Init(glm::ivec2 _windowSize)
         }
     }
 
+    m_percentsDone = std::vector<int>(m_threadsAmount, 0);
+
     return true;
 }
+
+unsigned int ThreadManager::GetThreadsAmount()
+{
+    return m_threadsAmount;
+}
+
+std::vector<int> ThreadManager::GetIntervals()
+{
+    return m_intervals;
+}
+
+int ThreadManager::GetPercentDone(int _threadId)
+{
+    return m_percentsDone.at(_threadId);
+}
+
+void ThreadManager::SetPercentDone(int _threadId, int _percentDone)
+{
+    m_percentsDone.at(_threadId) = _percentDone;
+}
+

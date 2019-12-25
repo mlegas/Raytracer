@@ -5,6 +5,7 @@
 
 Scene::Scene()
 {
+    m_maxDepth = 5;
     std::shared_ptr<Material> material = std::make_shared<Material>(1.0f, glm::vec3(0.0f, 0.2f, 0.5f));
     std::shared_ptr<Material> material2 = std::make_shared<Material>(1.0f, glm::vec3(0.5f, 0.0f, 0.5f));
 
@@ -29,4 +30,9 @@ std::shared_ptr<std::vector<std::shared_ptr<Object>>> Scene::GetObjects()
 std::shared_ptr<std::vector<std::shared_ptr<Light>>> Scene::GetLights()
 {
     return m_lights;
+}
+
+unsigned int Scene::GetMaxDepth()
+{
+    return m_maxDepth;
 }
