@@ -5,17 +5,19 @@ MaterialType Material::GetMaterialType()
     return m_materialType;
 }
 
-Material::Material(float _albedo, glm::vec3 _colour)
+int Material::GetTextureWidth()
 {
-    m_materialType = metal;
-    m_albedo = _albedo;
-    m_colour = _colour;
-    m_reflectivity = 0.001f;
+    return m_texture->GetWidth();
 }
 
-float Material::GetAlbedo()
+int Material::GetTextureHeight()
 {
-    return m_albedo;
+    return m_texture->GetHeight();
+}
+
+unsigned char* Material::GetTextureData()
+{
+    return m_texture->GetData();
 }
 
 glm::vec3 Material::GetColour()
@@ -23,17 +25,7 @@ glm::vec3 Material::GetColour()
     return m_colour;
 }
 
-float Material::GetReflectivity()
+bool Material::IsTextureSet()
 {
-    return m_reflectivity;
-}
-
-float Material::GetRefractiveIndex()
-{
-    return m_refractiveIndex;
-}
-
-float Material::GetTransparency()
-{
-    return m_transparency;
+    return m_textureSet;
 }

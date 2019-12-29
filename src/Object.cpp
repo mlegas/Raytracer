@@ -17,9 +17,17 @@ float Object::GetAlbedo()
     return m_material->GetAlbedo();
 }
 
-glm::vec3 Object::GetColour()
+glm::vec3 Object::GetColour(std::shared_ptr<IntersectionData> _data)
 {
-    return m_material->GetColour();
+    if (m_material->IsTextureSet())
+    {
+        return GetTextureColour(_data);
+    }
+
+    else
+    {
+        return m_material->GetColour();
+    }
 }
 
 float Object::GetReflectivity()
@@ -35,4 +43,9 @@ float Object::GetRefractiveIndex()
 float Object::GetTransparency()
 {
     return m_material->GetTransparency();
+}
+
+void Object::SetMaterial(std::shared_ptr<Material> _material)
+{
+    m_material = _material;
 }

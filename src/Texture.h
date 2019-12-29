@@ -15,10 +15,10 @@ private:
     int m_channels;
     unsigned char* m_data;
 public:
-    Texture();
+    int GetWidth();
+    int GetHeight();
     Texture(std::string _filename);
-    glm::vec3 GetTextureColourSphere(std::shared_ptr<Sphere> _sphere);
-    glm::vec3 GetTextureColourPlane();
+    unsigned char* GetData();
     ~Texture();
 };
 

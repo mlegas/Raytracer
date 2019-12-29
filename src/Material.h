@@ -8,31 +8,23 @@ enum MaterialType
     lambertian, metal, dielectric
 };
 
-class Texture;
-
 class Material
 {
 
-private:
-   // Texture m_texture;
+protected:
+    std::shared_ptr<Texture> m_texture;
+    bool m_textureSet;
     MaterialType m_materialType;
-    float m_reflectivity;
-    float m_refractiveIndex;
-    float m_albedo;
-    float m_transparency;
     glm::vec3 m_colour;
 
 public:
-    Material(float _albedo, glm::vec3 _colour);
-    Material(std::string _filename, MaterialType _materialType, float _fuzz);
+    bool IsTextureSet();
     MaterialType GetMaterialType();
-//    glm::vec3 getTextureValue(std::shared_ptr<Sphere> _sphere);
-//    glm::vec3 getTextureValue(std::shared_ptr<Plane> _plane);
-    float GetAlbedo();
+    unsigned char* GetTextureData();
+    int GetTextureWidth();
+    int GetTextureHeight();
     glm::vec3 GetColour();
-    float GetReflectivity();
-    float GetRefractiveIndex();
-    float GetTransparency();
+
 };
 
 #endif

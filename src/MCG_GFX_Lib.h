@@ -1,8 +1,6 @@
 #ifndef __MCG_MAIN__
 #define __MCG_MAIN__
 
-#include <mutex>
-
 // The GLM library contains vector and matrix functions and classes for us to use
 #include <glm/glm.hpp> // This is the main GLM header
 #include <glm/gtc/matrix_transform.hpp> // This one lets us use matrix transformations

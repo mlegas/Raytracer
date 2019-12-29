@@ -23,6 +23,21 @@ Texture::~Texture()
     stbi_image_free(m_data);
 }
 
+int Texture::GetWidth()
+{
+    return m_width;
+}
+
+int Texture::GetHeight()
+{
+    return m_height;
+}
+
+unsigned char* Texture::GetData()
+{
+    return m_data;
+}
+
 //glm::vec3 Texture::getTextureColourSphere(std::shared_ptr<Sphere> _sphere)
 //{
 //        float phi = atan2(_sphere->getIntersectionPoint().x, _sphere->getIntersectionPoint().z);

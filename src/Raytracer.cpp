@@ -15,7 +15,7 @@ glm::vec3 Raytracer::CalculateDiffuseColour(std::shared_ptr<Object> _object, std
 
     for (lightIterator = _scene->GetLights()->begin(); lightIterator != _scene->GetLights()->end(); lightIterator++)
     {
-        totalLight = totalLight + _object->GetColour() * (*lightIterator)->CalculateLight(_data, _scene->GetObjects(), _object->GetAlbedo());
+        totalLight = totalLight + _object->GetColour(_data) * (*lightIterator)->CalculateLight(_data, _scene->GetObjects(), _object->GetAlbedo());
     }
 
     return totalLight;
@@ -187,7 +187,7 @@ glm::vec3 Raytracer::ShadePixel(std::shared_ptr<Ray> _ray, std::shared_ptr<Objec
         glm::vec3 reflectionColour = RayTrace(reflectionRay, _scene, _depth + 1);
 
         glm::vec3 colour = reflectionColour * reflectionRatio + refractionColour * (1.0f - reflectionRatio);
-        return colour * _object->GetTransparency() * _object->GetColour();
+        return colour * _object->GetTransparency() * _object->GetColour(_data);
     }
 
 }

@@ -2,6 +2,7 @@
 #include "SphericalLight.h"
 #include "Scene.h"
 #include "Sphere.h"
+#include "Dielectric.h"
 
 Scene::Scene()
 {
@@ -9,9 +10,14 @@ Scene::Scene()
     std::shared_ptr<Material> material = std::make_shared<Material>(1.0f, glm::vec3(0.0f, 0.2f, 0.5f));
     std::shared_ptr<Material> material2 = std::make_shared<Material>(1.0f, glm::vec3(0.5f, 0.0f, 0.5f));
 
+    std::shared_ptr<Material> material3 = std::make_shared<Dielectric>(glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 1.0f);
+
     std::shared_ptr<Sphere> sphere = std::make_shared<Sphere>(glm::vec3(2.0f, 0.0f, -6.0f), 2.0f, material);
     std::shared_ptr<Sphere> sphere2 = std::make_shared<Sphere>(glm::vec3(-1.0f, 0.0f, -6.0f), 0.5f, material2);
-	m_objects = std::make_shared<std::vector<std::shared_ptr<Object>>>();
+
+    sphere->SetMaterial(material3);
+
+    m_objects = std::make_shared<std::vector<std::shared_ptr<Object>>>();
     m_objects->push_back(sphere);
     m_objects->push_back(sphere2);
 
