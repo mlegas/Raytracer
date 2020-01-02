@@ -1,6 +1,3 @@
-#ifndef LAMBERTIAN_H
-#define LAMBERTIAN_H
-
 #include "Material.h"
 
 class Lambertian : public Material
@@ -12,5 +9,3 @@ public:
     Lambertian(std::string _filename, float _albedo);
     float GetAlbedo();
 };
-
-#endif // LAMBERTIAN_H

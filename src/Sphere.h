@@ -1,6 +1,3 @@
-#ifndef _SPHERE_H_
-#define _SPHERE_H_
-
 #include "Object.h"
 #include <glm/vec3.hpp>
 #include <mutex>
@@ -16,5 +13,3 @@ public:
     std::shared_ptr<IntersectionData> Intersect(std::shared_ptr<Ray> _ray);
     Sphere(glm::vec3 _position, float _radius, std::shared_ptr<Material> _material);
 };
-
-#endif

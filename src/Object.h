@@ -20,12 +20,8 @@ class Object
         virtual std::shared_ptr<IntersectionData> Intersect(std::shared_ptr<Ray> _ray) = 0;
         glm::vec3 GetColour(std::shared_ptr<IntersectionData> _data);
         glm::vec3 GetPosition();
-        float GetAlbedo();
-        float GetReflectivity();
-        float GetRefractiveIndex();
-        float GetTransparency();
         MaterialType GetMaterialType();
-        void SetMaterial(std::shared_ptr<Material> _material);
+        std::shared_ptr<Material> GetMaterial();
 };
 
 #endif

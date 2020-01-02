@@ -1,6 +1,9 @@
 #include <cfloat>
 #include <iostream>
 #include <glm/ext.hpp>
+#include "Dielectric.h"
+#include "Metal.h"
+#include "Lambertian.h"
 #include "Light.h"
 #include "Object.h"
 #include "Raytracer.h"
@@ -15,7 +18,7 @@ glm::vec3 Raytracer::CalculateDiffuseColour(std::shared_ptr<Object> _object, std
 
     for (lightIterator = _scene->GetLights()->begin(); lightIterator != _scene->GetLights()->end(); lightIterator++)
     {
-        totalLight = totalLight + _object->GetColour(_data) * (*lightIterator)->CalculateLight(_data, _scene->GetObjects(), _object->GetAlbedo());
+        totalLight = totalLight + _object->GetColour(_data) * (*lightIterator)->CalculateLight(_data, _scene->GetObjects(), _object->GetMaterial()->GetAlbedo());
     }
 
     return totalLight;
@@ -25,7 +28,7 @@ float Raytracer::CalculateFresnel(std::shared_ptr<Ray> _ray, std::shared_ptr<Obj
 {
     float dirProjection = glm::dot(_ray->GetDirection(), _data->GetIntersectionNormal());
     float etaIncident = 1.0f;
-    float etaTransmission = _object->GetRefractiveIndex();
+    float etaTransmission = _object->GetMaterial()->GetRefractiveIndex();
 
     if (dirProjection > 0.0f)
     {
@@ -65,7 +68,7 @@ std::shared_ptr<Ray> Raytracer::CreateReflectionRay(std::shared_ptr<Ray> _ray, s
 std::shared_ptr<Ray> Raytracer::CreateTransmissionRay(std::shared_ptr<Ray> _ray, std::shared_ptr<Object> _object, std::shared_ptr<IntersectionData> _data)
 {
     glm::vec3 intersectionNormal = _data->GetIntersectionNormal();
-    float etaTransmission = _object->GetRefractiveIndex();
+    float etaTransmission = _object->GetMaterial()->GetRefractiveIndex();
     float etaIncident = 1.0f;
     float dirProjection = glm::dot(_ray->GetDirection(), _data->GetIntersectionNormal());
 
@@ -162,10 +165,10 @@ glm::vec3 Raytracer::ShadePixel(std::shared_ptr<Ray> _ray, std::shared_ptr<Objec
 
     else if (_object->GetMaterialType() == metal)
     {
-        glm::vec3 colour = CalculateDiffuseColour(_object, _data, _scene) * (1.0f - _object->GetReflectivity());
+        glm::vec3 colour = CalculateDiffuseColour(_object, _data, _scene) * (1.0f - _object->GetMaterial()->GetReflectivity());
 
         std::shared_ptr<Ray> reflectionRay = CreateReflectionRay(_ray, _data);
-        return colour + (RayTrace(reflectionRay, _scene, _depth + 1) * _object->GetReflectivity());
+        return colour + (RayTrace(reflectionRay, _scene, _depth + 1) * _object->GetMaterial()->GetReflectivity());
     }
 
     else
@@ -187,7 +190,7 @@ glm::vec3 Raytracer::ShadePixel(std::shared_ptr<Ray> _ray, std::shared_ptr<Objec
         glm::vec3 reflectionColour = RayTrace(reflectionRay, _scene, _depth + 1);
 
         glm::vec3 colour = reflectionColour * reflectionRatio + refractionColour * (1.0f - reflectionRatio);
-        return colour * _object->GetTransparency() * _object->GetColour(_data);
+        return colour * _object->GetMaterial()->GetTransparency() * _object->GetColour(_data);
     }
 
 }

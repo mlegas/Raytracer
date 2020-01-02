@@ -1,6 +1,3 @@
-#ifndef DIELECTRIC_H
-#define DIELECTRIC_H
-
 #include "Material.h"
 
 class Dielectric : public Material
@@ -14,5 +11,3 @@ public:
     float GetRefractiveIndex();
     float GetTransparency();
 };
-
-#endif // DIELECTRIC_H

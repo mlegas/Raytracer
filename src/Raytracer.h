@@ -1,6 +1,3 @@
-#ifndef _RAYTRACER_H_
-#define _RAYTRACER_H_
-
 #include <glm/vec3.hpp>
 #include <vector>
 #include <memory>
@@ -20,5 +17,3 @@ namespace Raytracer
     float CalculateFresnel(std::shared_ptr<Ray> _ray, std::shared_ptr<Object> _object, std::shared_ptr<IntersectionData> _data);
     glm::vec3 ShadePixel(std::shared_ptr<Ray> _ray, std::shared_ptr<Object> _object, std::shared_ptr<IntersectionData> _data, std::shared_ptr<Scene> _scene, unsigned int _depth);
 };
-
-#endif

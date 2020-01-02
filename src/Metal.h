@@ -1,6 +1,3 @@
-#ifndef METAL_H
-#define METAL_H
-
 #include "Material.h"
 
 class Metal : public Material
@@ -14,5 +11,3 @@ public:
     float GetAlbedo();
     float GetReflectivity();
 };
-
-#endif // METAL_H

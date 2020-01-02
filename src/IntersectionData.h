@@ -1,6 +1,3 @@
-#ifndef _INTERSECTIONDATA_H_
-#define _INTERSECTIONDATA_H_
-
 #include <glm/vec3.hpp>
 
 class IntersectionData
@@ -18,5 +15,3 @@ public:
     glm::vec3 GetIntersectionNormal();
     glm::vec3 GetIntersectionPoint();
 };
-
-#endif

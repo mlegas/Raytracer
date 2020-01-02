@@ -1,6 +1,3 @@
-#ifndef _SCENE_H_
-#define _SCENE_H_
-
 #include <vector>
 #include <memory>
 
@@ -19,5 +16,3 @@ public:
         std::shared_ptr<std::vector<std::shared_ptr<Light>>> GetLights();
         unsigned int GetMaxDepth();
 };
-
-#endif

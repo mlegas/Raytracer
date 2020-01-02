@@ -1,6 +1,3 @@
-#ifndef _THREADMANAGER_H_
-#define _THREADMANAGER_H_
-
 #include <memory>
 #include <thread>
 #include <mutex>
@@ -21,5 +18,3 @@ public:
     void SetPercentDone(int _threadId, int _percentDone);
     std::vector<std::thread> m_threads;
 };
-
-#endif

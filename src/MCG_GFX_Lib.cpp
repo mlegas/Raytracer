@@ -3,6 +3,7 @@
 #include "MCG_GFX_Lib.h"
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <mutex>
 
 namespace MCG
 {

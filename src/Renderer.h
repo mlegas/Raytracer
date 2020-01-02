@@ -1,6 +1,3 @@
-#ifndef _RENDERER_H_
-#define _RENDERER_H_
-
 #include <memory>
 #include <mutex>
 #include <vector>
@@ -32,5 +29,3 @@ public:
     bool Init();
     void Run();
 };
-
-#endif

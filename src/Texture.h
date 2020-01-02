@@ -1,6 +1,3 @@
-#ifndef _TEXTURE_H_
-#define _TEXTURE_H_
-
 #include <glm/vec3.hpp>
 #include <memory>
 #include <string>
@@ -21,5 +18,3 @@ public:
     unsigned char* GetData();
     ~Texture();
 };
-
-#endif

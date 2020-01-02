@@ -78,9 +78,9 @@ glm::vec3 Plane::GetTextureColour(std::shared_ptr<IntersectionData> _data)
         j = height - 1;
     }
 
-    float r = data[3 * i + 3 * width * j];
-    float g = data[3 * i + 3 * width * j + 1];
-    float b = data[3 * i + 3 * width * j + 2];
+    float r = data[3 * i + 3 * width * j] / 255.0f;
+    float g = data[3 * i + 3 * width * j + 1] / 255.0f;
+    float b = data[3 * i + 3 * width * j + 2] / 255.0f;
 
     return glm::vec3(r, g, b);
 }

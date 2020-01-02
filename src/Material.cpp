@@ -1,5 +1,7 @@
 #include "Material.h"
 
+#include <exception>
+
 MaterialType Material::GetMaterialType()
 {
     return m_materialType;
@@ -28,4 +30,24 @@ glm::vec3 Material::GetColour()
 bool Material::IsTextureSet()
 {
     return m_textureSet;
+}
+
+float Material::GetAlbedo()
+{
+    throw "The raytracer used base class Material functions.";
+}
+
+float Material::GetReflectivity()
+{
+    throw "The raytracer used base class Material functions.";
+}
+
+float Material::GetRefractiveIndex()
+{
+    throw "The raytracer used base class Material functions.";
+}
+
+float Material::GetTransparency()
+{
+    throw "The raytracer used base class Material functions.";
 }

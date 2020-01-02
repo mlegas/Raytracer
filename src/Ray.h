@@ -1,6 +1,3 @@
-#ifndef _RAY_H_
-#define _RAY_H
-
 #include <glm/vec3.hpp>
 #include <vector>
 #include <memory>
@@ -15,5 +12,3 @@ public:
     glm::vec3 GetDirection();
     Ray(glm::vec3 _origin, glm::vec3 _direction);
 };
-
-#endif

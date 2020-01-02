@@ -13,10 +13,10 @@ file(GLOB FILES
 	src/*.cpp
 	src/*.h)
 
-add_library(RaytracingFiles SHARED ${FILES})
+add_library(Raytracer SHARED ${FILES})
 
 add_executable(Main
         src/Main.cpp
 )
 
-target_link_libraries(Main RaytracingFiles SDL2)
+target_link_libraries(Main Raytracer SDL2)

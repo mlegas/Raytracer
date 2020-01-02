@@ -25,6 +25,10 @@ public:
     int GetTextureHeight();
     glm::vec3 GetColour();
 
+    virtual float GetAlbedo();
+    virtual float GetReflectivity();
+    virtual float GetRefractiveIndex();
+    virtual float GetTransparency();
 };
 
 #endif
