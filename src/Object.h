@@ -15,7 +15,7 @@ class Object
 	protected:
         glm::vec3 m_position;
         std::shared_ptr<Material> m_material;
-        virtual glm::vec3 GetTextureColour(std::shared_ptr<IntersectionData> _data) = 0;
+        virtual glm::vec3 GetTextureColour(std::shared_ptr<IntersectionData> _data) {}
     public:
         virtual std::shared_ptr<IntersectionData> Intersect(std::shared_ptr<Ray> _ray) = 0;
         glm::vec3 GetColour(std::shared_ptr<IntersectionData> _data);

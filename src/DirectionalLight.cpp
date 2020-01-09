@@ -2,6 +2,7 @@
 #include "Ray.h"
 #include "Object.h"
 #include <glm/ext.hpp>
+#include <algorithm>
 
 DirectionalLight::DirectionalLight(glm::vec3 _direction, glm::vec3 _colour, float _intensity)
 {
@@ -13,6 +14,8 @@ DirectionalLight::DirectionalLight(glm::vec3 _direction, glm::vec3 _colour, floa
 
 glm::vec3 DirectionalLight::CalculateLight(std::shared_ptr<IntersectionData> _data, std::shared_ptr<std::vector<std::shared_ptr<Object>>> _objects, float _albedo)
 {
+	float pi = 3.14159265f;
+
     glm::vec3 shadowOrigin = _data->GetIntersectionPoint() + (m_directionToLight * 0.01f);
     glm::vec3 shadowDirection = m_directionToLight;
 
@@ -32,7 +35,7 @@ glm::vec3 DirectionalLight::CalculateLight(std::shared_ptr<IntersectionData> _da
     }
 
     float lightPower = std::max(0.0f, glm::dot(m_directionToLight, _data->GetIntersectionNormal())) * m_intensity;
-    float lightReflected = _albedo / M_PI;
+    float lightReflected = _albedo / pi;
 
     glm::vec3 lightColor = m_colour * lightPower * lightReflected;
     return lightColor;

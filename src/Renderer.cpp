@@ -54,17 +54,17 @@ void Renderer::Run()
 
     startValues.push_back(0);
 
-    for (uint values = 0; values < m_threadManager->GetThreadsAmount() - 1; values++)
+    for (int values = 0; values < m_threadManager->GetThreadsAmount() - 1; values++)
     {
         startValues.push_back(m_threadManager->GetIntervals().at(values));
     }
 
-    for (uint t = 0; t < m_threadManager->GetThreadsAmount(); t++)
+    for (int t = 0; t < m_threadManager->GetThreadsAmount(); t++)
     {
         m_threadManager->m_threads.push_back(std::thread(&Renderer::MainLoop, this, startValues.at(t), m_threadManager->GetIntervals().at(t), t));
     }
 
-    for (uint t = 0; t < m_threadManager->GetThreadsAmount(); t++)
+    for (int t = 0; t < m_threadManager->GetThreadsAmount(); t++)
     {
         m_threadManager->m_threads.at(t).join();
     }
@@ -107,8 +107,9 @@ void Renderer::MainLoop(int _startValue, int _interval, int _threadId)
 
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
 
-        if (std::chrono::duration_cast<std::chrono::milliseconds>(now - m_deltaTime).count() > 500)
+       /* if (std::chrono::duration_cast<std::chrono::milliseconds>(now - m_deltaTime).count() > 1000)
         {
+			m_mtx.lock();
             std::system("CLS");
 
             int total = 0;
@@ -118,19 +119,16 @@ void Renderer::MainLoop(int _startValue, int _interval, int _threadId)
                 int percent = m_threadManager->GetPercentDone(t);
                 total += percent;
 
-                m_mtx.lock();
-                std::cout << "Thread #" << t << ": " << percent << "% finished" << std::endl;
-                m_mtx.unlock();
+				std::cout << "Thread #" << t << ": " << percent << "% finished" << std::endl;
             }
 
             total /= m_threadManager->GetThreadsAmount();
 
-            m_mtx.lock();
             std::cout << "Total percent done: " << total << "%" << std::endl;
             m_mtx.unlock();
 
             m_deltaTime = std::chrono::system_clock::now();
-        }
+        }*/
 
     }
 }

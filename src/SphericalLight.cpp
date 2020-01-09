@@ -2,6 +2,7 @@
 #include "Ray.h"
 #include "Object.h"
 #include <glm/ext.hpp>
+#include <algorithm>
 
 SphericalLight::SphericalLight(glm::vec3 _position, glm::vec3 _colour, float _intensity)
 {
@@ -12,6 +13,8 @@ SphericalLight::SphericalLight(glm::vec3 _position, glm::vec3 _colour, float _in
 
 glm::vec3 SphericalLight::CalculateLight(std::shared_ptr<IntersectionData> _data, std::shared_ptr<std::vector<std::shared_ptr<Object>>> _objects, float _albedo)
 {
+	float pi = 3.14159265f;
+
     glm::vec3 directionToLight = m_position - _data->GetIntersectionPoint();
     float distanceSquared = glm::dot(directionToLight, directionToLight);
     directionToLight = glm::normalize(directionToLight);
@@ -21,7 +24,7 @@ glm::vec3 SphericalLight::CalculateLight(std::shared_ptr<IntersectionData> _data
 
     float distanceToLight = glm::length(m_position - _data->GetIntersectionPoint());
 
-    float lightIntensity = m_intensity / (4.0f * M_PI * distanceSquared);
+    float lightIntensity = m_intensity / (4.0f * pi * distanceSquared);
 
     std::shared_ptr<Ray> shadowRay = std::make_shared<Ray>(shadowOrigin, shadowDirection);
     std::shared_ptr<IntersectionData> shadowIntersection;
@@ -42,7 +45,7 @@ glm::vec3 SphericalLight::CalculateLight(std::shared_ptr<IntersectionData> _data
     }
 
     float lightPower = std::max(0.0f, glm::dot(directionToLight, _data->GetIntersectionNormal())) * m_intensity;
-    float lightReflected = _albedo / M_PI;
+    float lightReflected = _albedo / pi;
 
     glm::vec3 lightColor = m_colour * lightPower * lightReflected;
     return lightColor;

@@ -85,17 +85,19 @@ std::shared_ptr<IntersectionData> Sphere::Intersect(std::shared_ptr<Ray> _ray)
 
 glm::vec3 Sphere::GetTextureColour(std::shared_ptr<IntersectionData> _data)
 {
-    float phi = std::atan2(_data->GetIntersectionPoint().x, _data->GetIntersectionPoint().z);
-    float theta = glm::asin(_data->GetIntersectionPoint().y);
-    float u = (phi + M_PI) / (2.0f * M_PI);
-    float v = (theta + M_PI / 2.0f) / M_PI;
+	float pi = 3.14159265f;
+
+    float phi = std::atan2(_data->GetIntersectionNormal().x, _data->GetIntersectionNormal().z);
+    float theta = glm::asin(_data->GetIntersectionNormal().y);
+    float u = (phi + pi) / (2.0f * pi);
+    float v = (theta + pi / 2.0f) / pi;
 
     unsigned char* data = m_material->GetTextureData();
     int width = m_material->GetTextureWidth();
     int height = m_material->GetTextureHeight();
 
     int i = u * width;
-    int j = (1.0f - v) * height;
+    int j = (1.0f - v) * height - 0.001f;
 
     if (i < 0)
     {

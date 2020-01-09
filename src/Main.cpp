@@ -23,8 +23,6 @@ int main()
         return -1;
     }
 
-    //Texture texture("/home/maciej/Pobrane/tvpis85ac58.jpg");
-
     renderer->Run();
 
 	return 0;

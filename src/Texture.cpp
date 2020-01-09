@@ -2,7 +2,7 @@
 #include <exception>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-#include "Sphere.h"
+#include "Texture.h"
 
 Texture::Texture(std::string _filename)
 {
@@ -10,7 +10,7 @@ Texture::Texture(std::string _filename)
     m_height = 0;
     m_channels = 0;
 
-    m_data = stbi_load(_filename.c_str(), &m_width, &m_height, &m_channels, 4);
+    m_data = stbi_load(_filename.c_str(), &m_width, &m_height, &m_channels, 0);
 
     if (!m_data)
     {

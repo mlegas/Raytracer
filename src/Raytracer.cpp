@@ -1,6 +1,7 @@
 #include <cfloat>
 #include <iostream>
 #include <glm/ext.hpp>
+#include <algorithm>
 #include "Dielectric.h"
 #include "Metal.h"
 #include "Lambertian.h"
@@ -60,7 +61,7 @@ float Raytracer::CalculateFresnel(std::shared_ptr<Ray> _ray, std::shared_ptr<Obj
 
 std::shared_ptr<Ray> Raytracer::CreateReflectionRay(std::shared_ptr<Ray> _ray, std::shared_ptr<IntersectionData> _data)
 {
-    glm::vec3 reflectOrigin = _data->GetIntersectionPoint() + (_data->GetIntersectionNormal() * 0.01f);
+    glm::vec3 reflectOrigin = _data->GetIntersectionPoint() + (_data->GetIntersectionNormal() * 0.001f);
     glm::vec3 reflectDirection = _ray->GetDirection() - (2.0f * glm::dot(_ray->GetDirection(), _data->GetIntersectionNormal()) * _data->GetIntersectionNormal());
     return std::make_shared<Ray>(reflectOrigin, reflectDirection);
 }

@@ -6,11 +6,8 @@ bool ThreadManager::Init(glm::ivec2 _windowSize)
 
     if (m_threadsAmount == 0)
     {
-        // assume at least 2 cores if unable to detect
         // most likely C++11 is not supported or CPU information is impossible to be obtained
-        m_threadsAmount = 2;
-        // return -1;
-        // change above lines if safety & reliability is more important
+		return -1;
     }
 
     int xInterval = _windowSize.x / m_threadsAmount;
