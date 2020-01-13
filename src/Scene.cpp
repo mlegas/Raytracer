@@ -20,7 +20,7 @@ Scene::Scene(int _maxDepth)
      *  Texture references:
      *  Camo, black and normal marble: https://seamless-pixels.blogspot.com/2012/09/free-seamless-marble-textures.html
      *  Ice: http://www.cadhatch.com/seamless-snow-and-ice-textures/4588167780 */
-    std::shared_ptr<Lambertian> floorMaterial = std::make_shared<Lambertian>(glm::vec3(0.5f, 0.5f, 0.5f), 0.3f);
+    std::shared_ptr<Lambertian> floorMaterial = std::make_shared<Lambertian>(glm::vec3(0.5f, 0.5f, 0.5f), 1.0f);
     std::shared_ptr<Lambertian> lambertianMat = std::make_shared<Lambertian>("./Textures/Marble.jpg", 0.9f);
     std::shared_ptr<Lambertian> lambertianMat3 = std::make_shared<Lambertian>("./Textures/BlackMarble.jpg", 0.9f);
     std::shared_ptr<Lambertian> lambertianMat4 = std::make_shared<Lambertian>(glm::vec3(1.0f, 0.0f, 0.0f), 1.0f);
