@@ -10,15 +10,15 @@ class Light;
 
 class Scene
 {
-private:
+    private:
         int m_maxDepth; ///< Maximum depth limit for reflecton and transmission rays.
         std::shared_ptr<std::vector<std::shared_ptr<Object>>> m_objects; ///< Stores all objects in the scene.
         std::shared_ptr<std::vector<std::shared_ptr<Light>>> m_lights; ///< Stores all lights in the scene.
-public:
+    public:
         /** @brief Constructs the scene, initializing all objects and lights.
          *  @param _maxDepth The depth limit for reflection and transmission rays.
          */
-		Scene(int _maxDepth);
+        Scene(int _maxDepth);
         /// @brief Returns a vector with all objects in the scene.
         std::shared_ptr<std::vector<std::shared_ptr<Object>>> GetObjects();
         /// @brief Returns a vector with all lights in the scene.

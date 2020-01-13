@@ -1,5 +1,5 @@
 /** @file Renderer.cpp
- *	@brief Implementation of functions for the Renderer class.
+ *  @brief Implementation of functions for the Renderer class.
  */
 
 #include "Renderer.h"
@@ -35,7 +35,7 @@ bool Renderer::Init(int _maxDepth)
     /// Initializes the SDL window with the specified window size.
     if (!MCG::Init(m_windowSize))
     {
-		/// Initialization failed, return.
+        /// Initialization failed, return.
         return -1;
     }
 
@@ -44,15 +44,15 @@ bool Renderer::Init(int _maxDepth)
 
     m_threadManager = std::make_shared<ThreadManager>();
 
-	/// Initializes the thread manager, which is responsible for passing the raytracing function to each thread.
+    /// Initializes the thread manager, which is responsible for passing the raytracing function to each thread.
     if (!m_threadManager->Init(m_windowSize))
     {
         return -1;
     }
 
-	/// Creates a camera, which will use the specified FOV and window size for the viewing matrix.
+    /// Creates a camera, which will use the specified FOV and window size for the viewing matrix.
     m_camera = std::make_shared<Camera>(m_windowSize, m_fov);
-	/// Initializes the scene and sets the maximum depth for reflection and transmission rays.
+    /// Initializes the scene and sets the maximum depth for reflection and transmission rays.
     m_scene = std::make_shared<Scene>(_maxDepth);
 
     return true;
@@ -94,14 +94,14 @@ void Renderer::Run()
     std::cout << "Finished drawing.\n";
     /// Calculate the time spent raytracing from subtracting the finish time from start time.
     std::cout << "Time spent raytracing: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() / 1000.0f << "s\n";
-	std::cout << "Press TAB while focused on the raytracer window to return to the menu.\n\n";
+    std::cout << "Press TAB while focused on the raytracer window to return to the menu.\n\n";
 
     /// Show the render.
     MCG::ShowAndHold();
     /// Destroy the window.
     MCG::Cleanup();
     /// Clear the terminal.
-	Clear;
+    Clear;
 }
 
 void Renderer::MainLoop(int _startValue, int _interval, int _threadId)
@@ -130,8 +130,8 @@ void Renderer::MainLoop(int _startValue, int _interval, int _threadId)
                 /** As all colour calculations are in the range between 0 and 1,
                  *  we need to convert the returned colour value to the RGB range of 0-255. */
                 raytracedColour = glm::vec3(glm::clamp((raytracedColour.x * 255.0f), 0.0f, 255.0f),
-                                   glm::clamp((raytracedColour.y * 255.0f), 0.0f, 255.0f),
-                                   glm::clamp((raytracedColour.z * 255.0f), 0.0f, 255.0f));
+                                            glm::clamp((raytracedColour.y * 255.0f), 0.0f, 255.0f),
+                                            glm::clamp((raytracedColour.z * 255.0f), 0.0f, 255.0f));
 
                 pixelColour = pixelColour + raytracedColour; ///< Sum the ray traced colour to a total.
             }
@@ -162,44 +162,44 @@ void Renderer::MainLoop(int _startValue, int _interval, int _threadId)
              *
              *  Of course, there might be a situation where both threads happen to be checking the same if
              *  statement, though such a situation has not been witnessed during debugging. */
-			if (!m_showStatus) 
-			{
+            if (!m_showStatus)
+            {
                 m_showStatus = true;
-			}
-			
-			m_mtx.unlock();
-			
+            }
+
+            m_mtx.unlock();
+
             /** This if statement is here to block any other threads that might have somehow entered the starting if statement
              *  from displaying the progress information, with the hope that the thread displaying the information
              *  has finished displaying the progress, therefore setting the m_showStatus to false at the end.
              *
              *  During debugging however, no multiple displays of the progress have been detected. */
-			if (m_showStatus)
-			{
+            if (m_showStatus)
+            {
                 Clear; ///< Clear the terminal.
 
                 int total = 0; ///< Sum of progress.
 
                 for (int threadId = 0; threadId < m_threadManager->GetThreadsAmount(); threadId++)
-				{
+                {
                     /// Return the progress from ThreadManager.
                     int percent = m_threadManager->GetPercentDone(threadId);
                     total += percent; ///< Sum the progress.
 
                     /// Display the progress of the currently evaluated thread.
                     std::cout << "Thread #" << threadId + 1 << ": " << percent << "% finished" << std::endl;
-				}
+                }
 
                 /// Divide the total progress by the amount of threads.
-				total /= m_threadManager->GetThreadsAmount();
+                total /= m_threadManager->GetThreadsAmount();
 
-				std::cout << "Total percent done: " << total << "%" << std::endl;
+                std::cout << "Total percent done: " << total << "%" << std::endl;
 
                 /// Reset the progress timer.
-				m_deltaTime = std::chrono::system_clock::now();
+                m_deltaTime = std::chrono::system_clock::now();
                 /// Stop showing progress.
-				m_showStatus = false;
-			}
+                m_showStatus = false;
+            }
         }
 
     }

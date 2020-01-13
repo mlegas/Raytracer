@@ -5,3 +5,4 @@ build/
 Raytracer/
 Raytracer.sln
 CMakeLists.txt.user
+.gitignore

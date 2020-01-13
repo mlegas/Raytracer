@@ -1,5 +1,5 @@
 /** @file ThreadManager.cpp
- *	@brief Implementation of functions for the ThreadManager class.
+ *  @brief Implementation of functions for the ThreadManager class.
  */
 
 #include "ThreadManager.h"
@@ -13,7 +13,7 @@ bool ThreadManager::Init(glm::ivec2 _windowSize)
     if (m_threadsAmount == 0)
     {
         /// Most likely C++11 is not supported or CPU information is impossible to be obtained, return.
-		return -1;
+        return -1;
     }
 
     /** Divides the width of the window by the amount of threads,

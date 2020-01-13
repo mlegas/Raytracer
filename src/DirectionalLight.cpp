@@ -1,5 +1,5 @@
 /** @file DirectionalLight.cpp
- *	@brief Implementation of functions for the DirectionalLight class.
+ *  @brief Implementation of functions for the DirectionalLight class.
  */
 
 #include "DirectionalLight.h"
@@ -18,7 +18,7 @@ DirectionalLight::DirectionalLight(glm::vec3 _direction, glm::vec3 _colour, floa
 
 glm::vec3 DirectionalLight::CalculateLight(std::shared_ptr<IntersectionData> _data, std::shared_ptr<std::vector<std::shared_ptr<Object>>> _objects, float _albedo)
 {
-	float pi = 3.14159265f;
+    float pi = 3.14159265f;
 
     /** Creates a shadow ray from the intersection point, with a small bias of 0.0001
      *  multiplied by the direction to light to remove the possibility of shadow acne.
@@ -31,8 +31,8 @@ glm::vec3 DirectionalLight::CalculateLight(std::shared_ptr<IntersectionData> _da
 
     std::vector<std::shared_ptr<Object>>::iterator objIterator;
 
-	/** This loop goes through all of the objects and checks whether the shadow ray
-	 *  collides with any of the objects on its direction to the light source. */
+    /** This loop goes through all of the objects and checks whether the shadow ray
+     *  collides with any of the objects on its direction to the light source. */
     for (objIterator = _objects->begin(); objIterator != _objects->end(); objIterator++)
     {
         shadowIntersection = (*objIterator)->Intersect(shadowRay);
@@ -42,10 +42,10 @@ glm::vec3 DirectionalLight::CalculateLight(std::shared_ptr<IntersectionData> _da
             return glm::vec3(0.0f, 0.0f, 0.0f); ///< Return the background colour (black) on collision, creating a shadow.
         }
     }
-	
-	/** The std::max ensures that in case the angle between the light source and the intersection point is above 90 degrees,
-	 *  there will be no light reflected. A failsafe in case the shadow intersection test failed.
-	 *  Reference: https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/diffuse-lambertian-shading */
+
+    /** The std::max ensures that in case the angle between the light source and the intersection point is above 90 degrees,
+     *  there will be no light reflected. A failsafe in case the shadow intersection test failed.
+     *  Reference: https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/diffuse-lambertian-shading */
     float lightPower = std::max(0.0f, glm::dot(m_directionToLight, _data->GetIntersectionNormal())) * m_intensity;
     float lightReflected = _albedo / pi; ///< Calculates the amount of reflected light using a derivation of Lambert's cosine law.
 

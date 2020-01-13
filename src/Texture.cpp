@@ -1,5 +1,5 @@
 /** @file Texture.cpp
- *	@brief Implementation of functions for the Texture class.
+ *  @brief Implementation of functions for the Texture class.
  */
 
 #include "Texture.h"

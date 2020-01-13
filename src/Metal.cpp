@@ -1,5 +1,5 @@
 /** @file Metal.cpp
- *	@brief Implementation of functions for the Metal class. 
+ *  @brief Implementation of functions for the Metal class.
  */
 
 #include "Metal.h"
@@ -10,8 +10,8 @@ Metal::Metal(glm::vec3 _colour, float _albedo, float _reflectivity)
     m_albedo = _albedo;
     m_reflectivity = _reflectivity;
 
-    m_textureSet = false; /**< Ensures that intersection functions will use colour-based functions 
-						   *  instead of trying to extract the colour from a (non-existing) texture. */ 
+    m_textureSet = false; /**< Ensures that intersection functions will use colour-based functions
+                           *  instead of trying to extract the colour from a (non-existing) texture. */
     m_materialType = metal;
 }
 
@@ -21,8 +21,8 @@ Metal::Metal(std::string _filename, float _albedo, float _reflectivity)
     m_albedo = _albedo;
     m_reflectivity = _reflectivity;
 
-    m_textureSet = true; /**< Ensures that intersection functions will use texture-based functions 
-						  *  instead of trying to return a (non-existing) colour value from the material. */ 
+    m_textureSet = true; /**< Ensures that intersection functions will use texture-based functions
+                          *  instead of trying to return a (non-existing) colour value from the material. */
     m_materialType = metal;
 }
 

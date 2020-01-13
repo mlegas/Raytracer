@@ -1,5 +1,5 @@
 /** @file Plane.cpp
- *	@brief Implementation of functions for the Ray class. 
+ *  @brief Implementation of functions for the Ray class.
  */
 
 #include "Ray.h"

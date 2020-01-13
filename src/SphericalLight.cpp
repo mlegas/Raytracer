@@ -1,5 +1,5 @@
 /** @file SphericalLight.cpp
- *	@brief Implementation of functions for the SphericalLight class.
+ *  @brief Implementation of functions for the SphericalLight class.
  */
 
 #include "SphericalLight.h"
@@ -17,7 +17,7 @@ SphericalLight::SphericalLight(glm::vec3 _position, glm::vec3 _colour, float _in
 
 glm::vec3 SphericalLight::CalculateLight(std::shared_ptr<IntersectionData> _data, std::shared_ptr<std::vector<std::shared_ptr<Object>>> _objects, float _albedo)
 {
-	float pi = 3.14159265f;
+    float pi = 3.14159265f;
 
     /// Sets the initial direction vector to the vector from the intersection point to the light.
     glm::vec3 directionToLight = m_position - _data->GetIntersectionPoint();

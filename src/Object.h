@@ -27,27 +27,27 @@ class Ray;
 
 class Object
 {
-	protected:
+    protected:
         glm::vec3 m_position; ///< The position of the object.
         std::shared_ptr<Material> m_material; ///< The material of the object.
-		/** @brief Extracts pixel colour from a texture, taking into consideration object type.
-		 *  @param _data The data about the intersection (point, normal, distance [t]).
-		 */
+        /** @brief Extracts pixel colour from a texture, taking into consideration object type.
+         *  @param _data The data about the intersection (point, normal, distance [t]).
+         */
         virtual glm::vec3 GetTextureColour(std::shared_ptr<IntersectionData> _data);
     public:
-		/** @brief Returns whether a given ray intersected with this object, and data about the intersection if true.
-		 *  @param _ray A ray with origin and direction.
-		 */
+        /** @brief Returns whether a given ray intersected with this object, and data about the intersection if true.
+         *  @param _ray A ray with origin and direction.
+         */
         virtual std::shared_ptr<IntersectionData> Intersect(std::shared_ptr<Ray> _ray) = 0;
-		/** @brief Returns a colour value from the object's material, either from a set colour or texture.
-		 *  @param _data The data about the intersection (point, normal, distance [t]).
-		 */
+        /** @brief Returns a colour value from the object's material, either from a set colour or texture.
+         *  @param _data The data about the intersection (point, normal, distance [t]).
+         */
         glm::vec3 GetColour(std::shared_ptr<IntersectionData> _data);
-		/// @brief Returns position of the object.
+        /// @brief Returns position of the object.
         glm::vec3 GetPosition();
-		/// @brief Returns the type of the material this object has.
+        /// @brief Returns the type of the material this object has.
         MaterialType GetMaterialType();
-		/// @brief Returns the material this object has.
+        /// @brief Returns the material this object has.
         std::shared_ptr<Material> GetMaterial();
 };
 

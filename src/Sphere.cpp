@@ -1,5 +1,5 @@
 /** @file Sphere.cpp
- *	@brief Implementation of functions for the Sphere class.
+ *  @brief Implementation of functions for the Sphere class.
  */
 
 #include "Sphere.h"
@@ -67,7 +67,7 @@ std::shared_ptr<IntersectionData> Sphere::Intersect(std::shared_ptr<Ray> _ray)
         /// Calculate the quadratic formula solutions.
         t0 = q / a;
         t1 = c / q;
-     }
+    }
 
     float t;
 
@@ -111,22 +111,28 @@ std::shared_ptr<IntersectionData> Sphere::Intersect(std::shared_ptr<Ray> _ray)
 
 glm::vec3 Sphere::GetTextureColour(std::shared_ptr<IntersectionData> _data)
 {
-    /** Reference: https://www.realtimerendering.com/raytracing/Ray%20Tracing_%20The%20Next%20Week.pdf
-     *  https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection */
-	float pi = 3.14159265f;
+    float pi = 3.14159265f;
 
+    /** Calculate the spherical coordinates phi and theta from Cartesian coordinates.
+     *  Reference: https://www.realtimerendering.com/raytracing/Ray%20Tracing_%20The%20Next%20Week.pdf
+     *  https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection */
     float phi = std::atan2(_data->GetIntersectionNormal().x, _data->GetIntersectionNormal().z);
     float theta = glm::asin(_data->GetIntersectionNormal().y);
+    /// Normalize phi and theta to a range [0, 1] to receive UV coordinates.
     float u = (phi + pi) / (2.0f * pi);
     float v = (theta + pi / 2.0f) / pi;
 
+    /// Get information about the texture.
     unsigned char* data = m_material->GetTextureData();
     int width = m_material->GetTextureWidth();
     int height = m_material->GetTextureHeight();
 
+    /// Calculate image pixel coordinates.
     int i = u * width;
     int j = (1.0f - v) * height - 0.001f;
 
+    /** Ensure that the calculated image pixel coordinates stay
+     *  in the range of the texture. */
     if (i < 0)
     {
         i = 0;
@@ -147,6 +153,9 @@ glm::vec3 Sphere::GetTextureColour(std::shared_ptr<IntersectionData> _data)
         j = height - 1;
     }
 
+    /** Retrieve the colour from the stored texture using
+     *  image pixel coordinates. As they are in the RGB range of
+     *  0-255, we need to convert it to a range 0-1 for further calculations. */
     float r = data[3 * i + 3 * width * j] / 255.0f;
     float g = data[3 * i + 3 * width * j + 1] / 255.0f;
     float b = data[3 * i + 3 * width * j + 2] / 255.0f;
@@ -156,8 +165,8 @@ glm::vec3 Sphere::GetTextureColour(std::shared_ptr<IntersectionData> _data)
 
 Sphere::Sphere(glm::vec3 _position, float _radius, std::shared_ptr<Material> _material)
 {
-	m_position = _position;
-	m_radius = _radius;
+    m_position = _position;
+    m_radius = _radius;
     m_radiusSquared = m_radius * m_radius;
     m_material = _material;
 }

@@ -1,5 +1,5 @@
 /** @file IntersectionData.cpp
- *	@brief Implementation of functions for the IntersectionData class.
+ *  @brief Implementation of functions for the IntersectionData class.
  */
  
 #include "IntersectionData.h"

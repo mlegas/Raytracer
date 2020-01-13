@@ -1,5 +1,5 @@
 /** @file Raytracer.cpp
- *	@brief Implementation of raytracing functions for the Raytracer namespace.
+ *  @brief Implementation of raytracing functions for the Raytracer namespace.
  *
  *  All of the colour calculations in these functions are in the range between 0 and 1.
  *  The colours are converted to a range between 0 and 255 just before returning the colour to the renderer
@@ -27,15 +27,15 @@ glm::vec3 Raytracer::CalculateDiffuseColour(std::shared_ptr<Object> _object, std
     std::vector<std::shared_ptr<Light>>::iterator lightIterator;
     glm::vec3 totalLight(0.0f);
 
-	/// Loop through all lights in the scene.
+    /// Loop through all lights in the scene.
     for (lightIterator = _scene->GetLights()->begin(); lightIterator != _scene->GetLights()->end(); lightIterator++)
     {
-		/** This line calculates and sums up all light the given object receives, so that
-		 *  in case one light casts a shadow on the object and another is casting light directly onto it,
-		 *  it will still be visible.
-		 *
-		 *  Each derived Light class contains its own function to handle the lighting calculations. 
-		 *  The Scene object is passed to provide the objects vector to check for possible shadows. */
+        /** This line calculates and sums up all light the given object receives, so that
+         *  in case one light casts a shadow on the object and another is casting light directly onto it,
+         *  it will still be visible.
+         *
+         *  Each derived Light class contains its own function to handle the lighting calculations.
+         *  The Scene object is passed to provide the objects vector to check for possible shadows. */
         totalLight = totalLight + _object->GetColour(_data) * (*lightIterator)->CalculateLight(_data, _scene->GetObjects(), _object->GetMaterial()->GetAlbedo());
     }
 
@@ -86,10 +86,10 @@ float Raytracer::CalculateFresnel(std::shared_ptr<Ray> _ray, std::shared_ptr<Obj
         float cosIncident = glm::abs(cosTransmission);
         /// Calculate the reflection coefficient for perpendicularly polarized light (s-polarized light).
         float rs = ((etaTransmission * cosIncident) - (etaIncident * cosTransmission)) /
-                ((etaTransmission * cosIncident) + (etaIncident * cosTransmission));     
+                   ((etaTransmission * cosIncident) + (etaIncident * cosTransmission));
         /// Calculate the reflection coefficient for parallelly polarized light (p-polarized light).
         float rp = ((etaIncident * cosIncident) - (etaTransmission * cosTransmission)) /
-                ((etaIncident * cosIncident) + (etaTransmission * cosTransmission));
+                   ((etaIncident * cosIncident) + (etaTransmission * cosTransmission));
 
         /// Calculate the average of both to receive the reflection ratio.
         return (rs * rs + rp * rp) / 2.0f;
@@ -181,7 +181,7 @@ glm::vec3 Raytracer::RayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> 
     bool anythingHit = false;
     float nearestDistance = FLT_MAX; ///< Set the initial distance to a closest intersecting object to the highest possible value.
 
-	/// Loop through all objects in the scene.
+    /// Loop through all objects in the scene.
     for (objIterator = _scene->GetObjects()->begin(); objIterator != _scene->GetObjects()->end(); objIterator++)
     {
         data = (*objIterator)->Intersect(_ray);
@@ -193,7 +193,7 @@ glm::vec3 Raytracer::RayTrace(std::shared_ptr<Ray> _ray, std::shared_ptr<Scene> 
                 anythingHit = true; ///< As an intersection has been detected, this bool stops the function from returning the background colour.
             }
 
-			/// Checks if the intersected object is closer than the previous one, if multiple intersecting objects have been detected.
+            /// Checks if the intersected object is closer than the previous one, if multiple intersecting objects have been detected.
             if (nearestDistance > data->GetIntersectionDistance())
             {
                 nearestDistance = data->GetIntersectionDistance(); ///< Change the control value to the distance to the new closest intersecting object.
@@ -225,12 +225,12 @@ glm::vec3 Raytracer::ShadePixel(std::shared_ptr<Ray> _ray, std::shared_ptr<Objec
 
     else if (_object->GetMaterialType() == metal)
     {
-		/// Perform diffuse shading on the object and reduce the visibility of it by its reflectivity.
+        /// Perform diffuse shading on the object and reduce the visibility of it by its reflectivity.
         glm::vec3 colour = CalculateDiffuseColour(_object, _data, _scene) * (1.0f - _object->GetMaterial()->GetReflectivity());
 
-		/// Create a reflection ray from the intersection point.
+        /// Create a reflection ray from the intersection point.
         std::shared_ptr<Ray> reflectionRay = CreateReflectionRay(_ray, _data);
-		/// Trace the reflection ray until the depth limit and return it along with the object's colour at the intersection point.
+        /// Trace the reflection ray until the depth limit and return it along with the object's colour at the intersection point.
         return colour + (RayTrace(reflectionRay, _scene, _depth + 1) * _object->GetMaterial()->GetReflectivity());
     }
 
@@ -243,18 +243,18 @@ glm::vec3 Raytracer::ShadePixel(std::shared_ptr<Ray> _ray, std::shared_ptr<Objec
         float reflectionRatio = CalculateFresnel(_ray, _object, _data);
 
         /** Checks if there is any light to be transmitted.
-		 *  Reference: https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel */
+         *  Reference: https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel */
         if (reflectionRatio < 1.0f)
         {
-           /// Creates a transmission ray for the light transmitted.
-           std::shared_ptr<Ray> transmissionRay = CreateTransmissionRay(_ray, _object, _data);
-		   
-           /// Check if there is no total internal reflection, nullifying the refraction.
-           if (transmissionRay != nullptr)
-           {
+            /// Creates a transmission ray for the light transmitted.
+            std::shared_ptr<Ray> transmissionRay = CreateTransmissionRay(_ray, _object, _data);
+
+            /// Check if there is no total internal reflection, nullifying the refraction.
+            if (transmissionRay != nullptr)
+            {
                 /// Trace a transmission ray through the scene.
-			   refractionColour = RayTrace(transmissionRay, _scene, _depth + 1);
-           }
+                refractionColour = RayTrace(transmissionRay, _scene, _depth + 1);
+            }
         }
 
         /// Create a reflection ray from the intersection point.
