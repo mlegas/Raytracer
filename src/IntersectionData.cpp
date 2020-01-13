@@ -1,3 +1,7 @@
+/** @file IntersectionData.cpp
+ *	@brief Implementation of functions for the IntersectionData class.
+ */
+ 
 #include "IntersectionData.h"
 
 float IntersectionData::GetIntersectionDistance()

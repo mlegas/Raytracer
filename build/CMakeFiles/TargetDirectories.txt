@@ -1,4 +1,0 @@
-W:/GCP/Raytracer/build/CMakeFiles/Raytracer.dir
-W:/GCP/Raytracer/build/CMakeFiles/Main.dir
-W:/GCP/Raytracer/build/CMakeFiles/ALL_BUILD.dir
-W:/GCP/Raytracer/build/CMakeFiles/ZERO_CHECK.dir

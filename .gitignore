@@ -2,3 +2,6 @@
 build/.vs
 source/.vs
 build/
+Raytracer/
+Raytracer.sln
+CMakeLists.txt.user
