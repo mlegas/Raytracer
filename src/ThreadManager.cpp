@@ -15,6 +15,8 @@ bool ThreadManager::Init(glm::ivec2 _windowSize)
         /// Most likely C++11 is not supported or CPU information is impossible to be obtained, return.
         return -1;
     }
+    /// Uncomment this line to use only a single thread.
+    //m_threadsAmount = 1;
 
     /** Divides the width of the window by the amount of threads,
      *  obtaining how large is an interval. */
@@ -43,6 +45,9 @@ bool ThreadManager::Init(glm::ivec2 _windowSize)
     /// Initialize the progress vector with zeros.
     m_percentsDone = std::vector<int>(m_threadsAmount, 0);
 
+    /// Initialize the progress check vector with false boolean values.
+    m_showProgress = std::vector<bool>(m_threadsAmount, false);
+
     return true;
 }
 
@@ -64,5 +69,15 @@ int ThreadManager::GetPercentDone(int _threadId)
 void ThreadManager::SetPercentDone(int _threadId, int _percentDone)
 {
     m_percentsDone.at(_threadId) = _percentDone;
+}
+
+bool ThreadManager::IsShowingProgress(int _threadId)
+{
+    return m_showProgress.at(_threadId);
+}
+
+void ThreadManager::SetShowingProgress(int _threadId, bool _isShowing)
+{
+    m_showProgress.at(_threadId) = _isShowing;
 }
 

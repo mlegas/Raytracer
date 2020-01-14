@@ -1,8 +1,4 @@
-.vs/
-build/.vs
-source/.vs
-build/
-Raytracer/
-Raytracer.sln
+bin(executable)/
+VSProject/
 CMakeLists.txt.user
 .gitignore

@@ -6,6 +6,7 @@
  */
 
 #include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
 #include <memory>
 #include <mutex>
 #include <thread>
@@ -25,9 +26,10 @@ class Renderer
         std::chrono::system_clock::time_point m_deltaTime; ///< Used to calculate time taken to finish.
         glm::ivec2 m_windowSize;
         float m_fov; ///< Field of view.
-        bool m_showStatus; ///< This boolean is used to stop other threads from displaying percentage progress.
+        bool m_statusShown; ///< This boolean is used to stop other threads from displaying percentage progress.
         int m_samples; ///< Amount of rays per pixel, used for anti-aliasing.
-        std::mutex m_mtx; ///< Mutex used to stop other threads in displaying progress.
+
+		std::vector<std::vector<glm::vec3>> m_pixelColours;
 
         /** @brief Raytraces through a part of the screen, depending on the set interval.
          *  @param _startValue The start pixel X position for the interval.

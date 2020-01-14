@@ -27,7 +27,7 @@ Renderer::Renderer(glm::ivec2 _windowSize, float _fov, int _samples)
     m_windowSize = _windowSize;
     m_fov = _fov;
     m_samples = _samples;
-    m_showStatus = false;
+    m_statusShown = false;
 }
 
 bool Renderer::Init(int _maxDepth)
@@ -54,6 +54,10 @@ bool Renderer::Init(int _maxDepth)
     m_camera = std::make_shared<Camera>(m_windowSize, m_fov);
     /// Initializes the scene and sets the maximum depth for reflection and transmission rays.
     m_scene = std::make_shared<Scene>(_maxDepth);
+
+    std::vector<glm::vec3> vertical = std::vector<glm::vec3>(m_windowSize.y, glm::vec3(0.0f, 0.0f, 0.0f));
+
+    m_pixelColours = std::vector<std::vector<glm::vec3>>(m_windowSize.x, vertical);
 
     return true;
 }
@@ -88,6 +92,18 @@ void Renderer::Run()
         m_threadManager->m_threads.at(t).join();
     }
 
+    std::vector<std::vector<glm::vec3>>::iterator horizontalIterator;
+    std::vector<glm::vec3>::iterator verticalIterator;
+
+    /// Draw the stored pixel colours to the window.
+    for (horizontalIterator = m_pixelColours.begin(); horizontalIterator != m_pixelColours.end(); horizontalIterator++)
+    {
+        for (verticalIterator = horizontalIterator->begin(); verticalIterator != horizontalIterator->end(); verticalIterator++)
+        {
+            MCG::DrawPixel(glm::ivec2(horizontalIterator - m_pixelColours.begin(), verticalIterator - horizontalIterator->begin()), (*verticalIterator));
+        }
+    }
+    
     /// Sets a finish time.
     std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
 
@@ -137,45 +153,51 @@ void Renderer::MainLoop(int _startValue, int _interval, int _threadId)
             }
             /// Divide the sum by the amount of samples to receive an average colour.
             pixelColour = glm::vec3(pixelColour.x / m_samples, pixelColour.y / m_samples, pixelColour.z / m_samples);
-            /// Draw the pixel colour on the window.
-            MCG::DrawPixel(currentPixelI, pixelColour);
+            /// Store the pixel colour.
+            m_pixelColours.at(x).at(y) = pixelColour;
         }
 
         /// Calculate the progress of the thread by checking the current X value.
         int percentDone = ((static_cast<float>(x - _startValue)) / static_cast<float>(_interval - _startValue)) * 100.0f;
         /** Set the progress in the ThreadManager's vector. Although multiple threads may access the vector
          *  at the same time, they are never writing to the same position. */
-        m_threadManager->SetPercentDone(_threadId, percentDone + 1);
-
+        if (!m_statusShown)
+        {
+            m_threadManager->SetPercentDone(_threadId, percentDone + 1);
+        }
         /// Store the current time.
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
 
-        /// Display the overall progress after every 100ms passed.
-        if (std::chrono::duration_cast<std::chrono::milliseconds>(now - m_deltaTime).count() > 100 && !m_showStatus)
+        /// Display the overall progress after every 300ms passed.
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(now - m_deltaTime).count() > 300 && !m_statusShown)
         {
-            m_mtx.lock(); ///< Locks the mutex.
+            bool showStatus = true;
 
-            /** This if statement's role is to block other threads from displaying the progress in the terminal,
-             *  as only one thread at a time can access the if statement below due to the mutex lock. Therefore,
-             *  when the mutex unlocks, the m_showStatus variable is set to true, blocking other threads from accessing
-             *  the if statement above.
-             *
-             *  Of course, there might be a situation where both threads happen to be checking the same if
-             *  statement, though such a situation has not been witnessed during debugging. */
-            if (!m_showStatus)
+            for (int threadId = 0; threadId < m_threadManager->GetThreadsAmount(); threadId++)
             {
-                m_showStatus = true;
+                /** This if statement's role is to block other threads from displaying the progress in the terminal,
+                 *  as only one thread at a time can access the if statement below due to the mutex lock. Therefore,
+                 *  when the mutex unlocks, the m_showStatus variable is set to true, blocking other threads from accessing
+                 *  the if statement above.
+                 *
+                 *  Of course, there might be a situation where both threads happen to be checking the same if
+                 *  statement, though such a situation has not been witnessed during debugging. */
+                if (m_threadManager->IsShowingProgress(threadId))
+                {
+                    showStatus = false;
+                }
             }
-
-            m_mtx.unlock();
 
             /** This if statement is here to block any other threads that might have somehow entered the starting if statement
              *  from displaying the progress information, with the hope that the thread displaying the information
-             *  has finished displaying the progress, therefore setting the m_showStatus to false at the end.
+             *  has finished displaying the progress, therefore setting the m_statusShown to false at the end.
              *
              *  During debugging however, no multiple displays of the progress have been detected. */
-            if (m_showStatus)
+            if (showStatus && !m_statusShown)
             {
+                m_threadManager->SetShowingProgress(_threadId, true);
+                m_statusShown = true;
+
                 Clear; ///< Clear the terminal.
 
                 int total = 0; ///< Sum of progress.
@@ -198,7 +220,8 @@ void Renderer::MainLoop(int _startValue, int _interval, int _threadId)
                 /// Reset the progress timer.
                 m_deltaTime = std::chrono::system_clock::now();
                 /// Stop showing progress.
-                m_showStatus = false;
+                m_threadManager->SetShowingProgress(_threadId, false);
+                m_statusShown = false;
             }
         }
 

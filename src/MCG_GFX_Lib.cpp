@@ -11,7 +11,6 @@ namespace MCG
 	SDL_Window *_window;
 	glm::ivec2 _winSize;
 	unsigned int _lastTime;
-    std::mutex _mtx; ///< Mutex used to draw only one pixel at a time.
 }
 
 
@@ -28,8 +27,8 @@ bool MCG::Init( glm::ivec2 windowSize)
 	// Now we have got SDL initialised, we are ready to create a window!
 	// These are some variables to help show you what the parameters are for this function
 	// You can experiment with the numbers to see what they do
-	int winPosX = 400;
-	int winPosY = 300;
+	int winPosX = 300;
+	int winPosY = 50;
 	_window = SDL_CreateWindow( "Raytracer",  // The first parameter is the window title
 		winPosX, winPosY,
 		_winSize.x, _winSize.y,
@@ -85,13 +84,10 @@ void MCG::SetBackground( glm::ivec3 colour )
 
 void MCG::DrawPixel( glm::ivec2 position, glm::ivec3 colour)
 {
-    /// Locks the mutex to stop other threads from drawing simultaneously.
-    _mtx.lock();
 	// Set the colour for drawing
 	SDL_SetRenderDrawColor( _renderer, colour.r, colour.g, colour.b, 255 );
     // Draw our pixel
 	SDL_RenderDrawPoint( _renderer, position.x, position.y );
-    _mtx.unlock();
 }
 
 
