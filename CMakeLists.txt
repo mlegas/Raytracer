@@ -5,9 +5,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(Raytracer LANGUAGES CXX)
 
+find_package(SDL2 REQUIRED)
+
 include_directories(
 	include
 	src
+	${SDL2_INCLUDE_DIRS}
 )
 
 file(GLOB FILES
@@ -26,4 +29,4 @@ add_executable(Main
         src/Main.cpp
 )
 
-target_link_libraries(Main Raytracer SDL2)
+target_link_libraries(Main Raytracer SDL2 ${SDL2_LIBRARIES})
